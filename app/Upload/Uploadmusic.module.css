@@ -1,0 +1,688 @@
+/* UploadMusic.module.css */
+
+.page {
+  --red: #c8102e;
+  --red-dark: #9b0d23;
+  --red-glow: rgba(200, 16, 46, 0.18);
+  --black: #0a0a0a;
+  --card-bg: #111111;
+  --border: #222222;
+  --border-focus: #c8102e;
+  --input-bg: #0e0e0e;
+  --gray-800: #1c1c1c;
+  --gray-600: #444444;
+  --gray-400: #888888;
+  --gray-200: #cccccc;
+  --white: #f5f5f5;
+
+  min-height: 100vh;
+  background-color: var(--black);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  position: relative;
+  overflow-x: hidden;
+  padding: 48px 16px 80px;
+}
+
+/* Noise */
+.noise {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* ── Header ───────────────────────────────────────── */
+.pageHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.pageLabel {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red);
+  border: 1px solid var(--red-dark);
+  padding: 5px 14px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+
+.pageTitle {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 10px;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.pageSub {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 14px;
+  color: var(--gray-400);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Stepper ──────────────────────────────────────── */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 36px;
+  gap: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.stepItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.stepCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background-color: var(--card-bg);
+  color: var(--gray-400);
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.stepLabel {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  text-align: center;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+
+.stepActive .stepCircle {
+  border-color: var(--red);
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.stepActive .stepLabel {
+  color: var(--red);
+}
+
+.stepDone .stepCircle {
+  border-color: var(--red-dark);
+  background-color: var(--red-dark);
+  color: var(--white);
+}
+
+.stepDone .stepLabel {
+  color: var(--gray-400);
+}
+
+.stepLine {
+  flex: 1;
+  height: 2px;
+  background-color: var(--border);
+  min-width: 24px;
+  max-width: 60px;
+  margin-bottom: 24px;
+  transition: background-color 0.3s;
+}
+
+.stepLineDone {
+  background-color: var(--red-dark);
+}
+
+/* ── Card ─────────────────────────────────────────── */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 40px 36px;
+}
+
+/* ── Section ──────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  letter-spacing: -0.01em;
+}
+
+.sectionNum {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  background-color: rgba(200, 16, 46, 0.12);
+  border: 1px solid var(--red-dark);
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+}
+
+.sectionDesc {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 13px;
+  color: var(--gray-400);
+  margin: -8px 0 4px;
+  line-height: 1.6;
+}
+
+/* ── Form Fields ──────────────────────────────────── */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldFull {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-200);
+}
+
+.req {
+  color: var(--red);
+}
+
+.input,
+.select,
+.textarea {
+  background-color: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--white);
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 14px;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.textarea {
+  resize: vertical;
+  line-height: 1.7;
+  min-height: 100px;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-glow);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--gray-600);
+}
+
+.input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
+}
+
+.hint {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: var(--gray-400);
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* ── Credit Groups ────────────────────────────────── */
+.creditGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 20px;
+}
+
+.creditGroupTitle {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin: 0;
+}
+
+/* ── Info Box ─────────────────────────────────────── */
+.infoBox {
+  display: flex;
+  gap: 12px;
+  background-color: rgba(200, 16, 46, 0.07);
+  border: 1px solid rgba(200, 16, 46, 0.25);
+  border-radius: 3px;
+  padding: 14px 16px;
+}
+
+.infoIcon {
+  font-size: 16px;
+  color: var(--red);
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+
+.infoText {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 13px;
+  color: var(--gray-400);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Content Flags ────────────────────────────────── */
+.flagsRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.flagBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--gray-400);
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.flagBtn:hover {
+  border-color: var(--gray-600);
+  color: var(--gray-200);
+}
+
+.flagActive {
+  border-color: var(--red) !important;
+  background-color: rgba(200, 16, 46, 0.1) !important;
+  color: var(--white) !important;
+}
+
+.flagIcon {
+  font-size: 14px;
+}
+
+.flagCheck {
+  color: var(--red);
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+/* ── Upload Zones ─────────────────────────────────── */
+.uploadBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.uploadLabel {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-200);
+}
+
+.uploadSpec {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: var(--gray-400);
+  letter-spacing: 0.05em;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropZone {
+  border: 1px dashed var(--border);
+  border-radius: 3px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.dropZone:hover {
+  border-color: var(--red);
+  background-color: rgba(200, 16, 46, 0.04);
+}
+
+.dropZoneFilled {
+  border-color: var(--red-dark);
+  background-color: rgba(200, 16, 46, 0.07);
+}
+
+.dropPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+
+.dropIcon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.fileReady {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fileIcon {
+  font-size: 22px;
+}
+
+.fileName {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: var(--white);
+  letter-spacing: 0.03em;
+}
+
+/* Cover */
+.coverRow {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.coverDropZone {
+  width: 160px;
+  height: 160px;
+  border: 1px dashed var(--border);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+
+.coverDropZone:hover {
+  border-color: var(--red);
+}
+
+.coverDropZoneFilled {
+  border-color: var(--red-dark);
+}
+
+.coverPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.coverHints {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 12px;
+  color: var(--gray-400);
+  line-height: 1.7;
+  padding-top: 4px;
+}
+
+.coverHints p {
+  margin: 0 0 8px;
+  font-weight: 600;
+  color: var(--gray-200);
+}
+
+.coverHints ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.coverHints li {
+  margin-bottom: 4px;
+}
+
+/* ── Nav Row ──────────────────────────────────────── */
+.navRow {
+  display: flex;
+  align-items: center;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  gap: 12px;
+}
+
+.navSpacer {
+  flex: 1;
+}
+
+.btnBack {
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--gray-400);
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btnBack:hover {
+  border-color: var(--gray-400);
+  color: var(--white);
+}
+
+.btnNext,
+.btnSubmit {
+  padding: 12px 32px;
+  background-color: var(--red);
+  border: 2px solid var(--red);
+  border-radius: 2px;
+  color: var(--white);
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btnNext:hover,
+.btnSubmit:hover {
+  background-color: transparent;
+  color: var(--red);
+}
+
+.btnNext:disabled,
+.btnSubmit:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Success Screen ───────────────────────────────── */
+.successScreen {
+  min-height: 100vh;
+  background-color: var(--black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  gap: 20px;
+}
+
+.successIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--red);
+  color: var(--white);
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.successTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.successSub {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 15px;
+  color: var(--gray-400);
+  line-height: 1.7;
+  max-width: 420px;
+  margin: 0;
+}
+
+.successBtn {
+  padding: 13px 36px;
+  background-color: transparent;
+  border: 2px solid var(--red);
+  border-radius: 2px;
+  color: var(--red);
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.successBtn:hover {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+/* ── Animation ────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 640px) {
+  .card { padding: 28px 20px; }
+
+  .row { grid-template-columns: 1fr; }
+
+  .coverRow {
+    grid-template-columns: 1fr;
+  }
+
+  .coverDropZone {
+    width: 100%;
+    height: 200px;
+  }
+
+  .stepper { gap: 2px; }
+  .stepLabel { font-size: 8px; }
+  .stepLine { min-width: 12px; }
+}

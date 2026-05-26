@@ -1,0 +1,318 @@
+/* RilisSection.module.css */
+
+/* ─── Variables ───────────────────────────────────── */
+.section {
+  --red-primary: #c8102e;
+  --red-dark: #9b0d23;
+  --red-glow: rgba(200, 16, 46, 0.18);
+  --black: #0a0a0a;
+  --black-card: #111111;
+  --black-hover: #181818;
+  --gray-500: #555555;
+  --gray-400: #888888;
+  --gray-200: #cccccc;
+  --white: #f5f5f5;
+
+  position: relative;
+  background-color: var(--black);
+  padding: 80px 0 100px;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  overflow: hidden;
+}
+
+/* ─── Noise texture overlay ───────────────────────── */
+.noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Container ───────────────────────────────────── */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── Header ──────────────────────────────────────── */
+.header {
+  text-align: center;
+  margin-bottom: 56px;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 3px;
+  background-color: var(--red-primary);
+  margin: 22px auto 0;
+  border-radius: 2px;
+}
+
+.label {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red-primary);
+  border: 1px solid var(--red-dark);
+  padding: 5px 14px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--white);
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 14px auto 0;
+  max-width: 480px;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--gray-400);
+}
+
+/* ─── List ────────────────────────────────────────── */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ─── Card ────────────────────────────────────────── */
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  background-color: var(--black-card);
+  border: 1px solid #1e1e1e;
+  border-radius: 3px;
+  text-decoration: none;
+  overflow: hidden;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeUp 0.5s ease both;
+}
+
+.card:hover {
+  background-color: var(--black-hover);
+  border-color: var(--red-dark);
+  box-shadow: 0 0 24px var(--red-glow);
+}
+
+/* ─── Accent line (bottom) ────────────────────────── */
+.accentLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--red-primary);
+  transition: width 0.35s ease;
+}
+
+.card:hover .accentLine {
+  width: 100%;
+}
+
+/* ─── Number ──────────────────────────────────────── */
+.number {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-500);
+  min-width: 28px;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.card:hover .number {
+  color: var(--red-primary);
+}
+
+/* ─── Cover ───────────────────────────────────────── */
+.coverWrapper {
+  position: relative;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, filter 0.3s ease;
+  filter: brightness(0.85);
+}
+
+.card:hover .cover {
+  transform: scale(1.08);
+  filter: brightness(1);
+}
+
+.playIcon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--white);
+  background-color: rgba(200, 16, 46, 0.75);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.card:hover .playIcon {
+  opacity: 1;
+}
+
+/* ─── Info ────────────────────────────────────────── */
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.type {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red-primary);
+}
+
+.dot {
+  color: var(--gray-500);
+  font-size: 12px;
+}
+
+.date {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 11px;
+  color: var(--gray-400);
+}
+
+.songTitle {
+  margin: 0 0 2px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease;
+}
+
+.card:hover .songTitle {
+  color: var(--red-primary);
+}
+
+.artist {
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 13px;
+  color: var(--gray-400);
+}
+
+/* ─── Arrow ───────────────────────────────────────── */
+.arrow {
+  font-size: 18px;
+  color: var(--gray-500);
+  flex-shrink: 0;
+  transition: color 0.2s ease, transform 0.25s ease;
+}
+
+.card:hover .arrow {
+  color: var(--red-primary);
+  transform: translateX(4px);
+}
+
+/* ─── CTA ─────────────────────────────────────────── */
+.ctaWrapper {
+  text-align: center;
+  margin-top: 52px;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 14px 40px;
+  background-color: transparent;
+  color: var(--white);
+  text-decoration: none;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 2px solid var(--red-primary);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.ctaButton:hover {
+  background-color: var(--red-primary);
+  color: var(--white);
+}
+
+/* ─── Animation ───────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 600px) {
+  .section {
+    padding: 56px 0 72px;
+  }
+
+  .coverWrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .number {
+    display: none;
+  }
+
+  .songTitle {
+    font-size: 15px;
+  }
+}

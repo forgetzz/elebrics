@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 @theme inline {
@@ -23,4 +26,38 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --red-primary: #e8000d;
+  --red-dark: #9b0008;
+  --red-glow: rgba(232, 0, 13, 0.4);
+  --black: #0a0a0a;
+  --black-mid: #141414;
+  --white: #f5f0eb;
+  --white-dim: rgba(245, 240, 235, 0.6);
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8102e;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a50d26;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #c8102e #0a0a0a;
 }

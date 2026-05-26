@@ -1,0 +1,373 @@
+/* ArtistSection.module.css */
+
+/* ─── Variables ───────────────────────────────────── */
+.section {
+  --red-primary: #c8102e;
+  --red-dark: #9b0d23;
+  --red-light: #f7e6e9;
+  --white: #ffffff;
+  --gray-100: #f9f9f9;
+  --gray-300: #e0e0e0;
+  --gray-600: #666666;
+  --gray-900: #111111;
+
+  background-color: var(--white);
+  padding: 80px 0 100px;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  overflow: hidden;
+}
+
+/* ─── Container ───────────────────────────────────── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── Header ──────────────────────────────────────── */
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 3px;
+  background-color: var(--red-primary);
+  margin: 24px auto 0;
+  border-radius: 2px;
+}
+
+.label {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red-primary);
+  background-color: var(--red-light);
+  padding: 6px 14px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--gray-900);
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 14px auto 0;
+  max-width: 480px;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--gray-600);
+}
+
+/* ─── Grid ────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px;
+}
+
+/* ─── Card ────────────────────────────────────────── */
+.card {
+  position: relative;
+  text-decoration: none;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  animation: fadeUp 0.5s ease both;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(200, 16, 46, 0.15);
+  border-color: var(--red-primary);
+}
+
+/* ─── Card Accent Bar ─────────────────────────────── */
+.cardAccent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: var(--red-primary);
+  transition: width 0.35s ease;
+}
+
+.card:hover .cardAccent {
+  width: 100%;
+}
+
+/* ─── Image ───────────────────────────────────────── */
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background-color: var(--gray-100);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+  filter: grayscale(15%);
+}
+
+.card:hover .image {
+  transform: scale(1.07);
+  filter: grayscale(0%);
+}
+
+/* ─── Overlay ─────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(155, 13, 35, 0.75) 0%,
+    transparent 60%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.visitText {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+/* ─── Info ────────────────────────────────────────── */
+.info {
+  padding: 16px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.genre {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red-primary);
+}
+
+.artistName {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray-900);
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+
+.card:hover .artistName {
+  color: var(--red-primary);
+}
+
+/* ─── CTA ─────────────────────────────────────────── */
+.ctaWrapper {
+  text-align: center;
+  margin-top: 56px;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 14px 40px;
+
+  color: var(--white);
+  text-decoration: none;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.ctaButton:hover {
+  background-color: transparent;
+  color: var(--red-primary);
+}
+
+/* ─── Animation ───────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Responsive ──────────────────────────────────── */
+@media (max-width: 600px) {
+  .section {
+    padding: 56px 0 72px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .header {
+    margin-bottom: 40px;
+  }
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(260px, 1fr)
+  );
+  gap: 2rem;
+  justify-items: center;
+}
+
+.stack {
+  width: 100%;
+  max-width: 300px;
+  transition: 0.25s ease;
+  text-decoration: none;
+}
+
+.stack:hover {
+  transform: rotate(5deg);
+}
+
+.stack:hover .card::before {
+  transform: translateY(-2%) rotate(-4deg);
+}
+
+.stack:hover .card::after {
+  transform: translateY(2%) rotate(4deg);
+}
+
+.card {
+  aspect-ratio: 3 / 4;
+  border: 4px solid #111;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
+  padding: 16px;
+  transition: 0.2s ease;
+  border-radius: 20px;
+}
+
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 4px solid #111;
+  background: #fff;
+  z-index: -1;
+  border-radius: 20px;
+  transition: 0.2s ease;
+}
+
+.card::before {
+  transform: translateY(-2%)
+    rotate(-6deg);
+}
+
+.card::after {
+  transform: translateY(2%)
+    rotate(6deg);
+}
+
+.imageWrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 4px solid #111;
+  background: #eee;
+  border-radius: 14px;
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.stack:hover .overlay {
+  opacity: 1;
+}
+
+.visitText {
+  color: white;
+  font-weight: 700;
+}
+
+.info {
+  margin-top: 1rem;
+}
+
+.genre {
+  display: inline-block;
+  font-size: 0.8rem;
+  background: #111;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.artistName {
+  margin-top: 10px;
+  color: #111;
+  font-size: 1.2rem;
+  font-weight: 700;
+}

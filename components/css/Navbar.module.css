@@ -1,0 +1,295 @@
+.navbarRoot {
+  font-family: "Outfit", sans-serif;
+  background: var(--black);
+  color: var(--white);
+}
+
+.navbarWrapper {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    var(--black) 0%,
+    #1a0305 50%,
+    var(--black) 100%
+  );
+  border-bottom: 1px solid rgba(232, 0, 13, 0.25);
+  overflow: hidden;
+}
+
+.navbarWrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--red-primary),
+    #ff4d55,
+    var(--red-primary),
+    transparent
+  );
+  animation: scanline 3s linear infinite;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.navbarInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 68px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brandIcon {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandIcon svg {
+  color: var(--red-primary);
+  filter: drop-shadow(0 0 6px var(--red-glow));
+  animation: spinSlow 8s linear infinite;
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandTitle {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.12em;
+  color: var(--white);
+}
+
+.brandTitle span {
+  color: var(--red-primary);
+  text-shadow: 0 0 12px var(--red-glow);
+}
+
+.brandSub {
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  margin-top: 1px;
+}
+
+/* Desktop Nav */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.2s ease;
+}
+
+.navLinks a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--red-primary);
+  box-shadow: 0 0 6px var(--red-glow);
+  transition: width 0.3s ease;
+}
+
+.navLinks a:hover {
+  color: var(--white);
+}
+
+.navLinks a:hover::after {
+  width: 100%;
+}
+
+.liNav {
+  background: var(--red-primary);
+  padding: 3px;
+  border-radius: 10px 0;
+}
+
+.navCta {
+  color: var(--white) !important;
+  padding: 1rem 1.2rem;
+  border-radius: 2px;
+  letter-spacing: 0.15em;
+  font-size: 0.72rem !important;
+  font-weight: 500;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 0 0 0 var(--red-glow);
+}
+
+.navCta:hover {
+  background: #ff1a24 !important;
+  box-shadow: 0 0 18px var(--red-glow) !important;
+  color: var(--white) !important;
+}
+
+.navCta::after {
+  display: none !important;
+}
+
+/* Hamburger */
+
+.menuBtn:hover {
+  border-color: var(--red-primary);
+  background: rgba(232, 0, 13, 0.08);
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  background: var(--black-mid);
+  border-top: 1px solid rgba(232, 0, 13, 0.15);
+  padding: 1rem 2rem 1.5rem;
+  gap: 1.25rem;
+  animation: slideDown 0.2s ease;
+}
+
+.open {
+  display: flex;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobileMenu a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mobileMenu a:hover {
+  color: var(--red-primary);
+}
+
+.mobileCta {
+  background: var(--red-primary);
+  color: var(--white) !important;
+  text-align: center;
+  padding: 0.9rem;
+  border-radius: 2px;
+  margin-top: 0.25rem;
+}
+
+/* Responsive */
+
+
+.menuBtn {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: transparent;
+
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.menuBtn span {
+  width: 100%;
+  height: 2px;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* garis atas */
+.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+/* garis tengah */
+.active span:nth-child(2) {
+  opacity: 0;
+}
+
+/* garis bawah */
+.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+
+  .menuBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
