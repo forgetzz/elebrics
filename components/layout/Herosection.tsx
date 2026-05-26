@@ -2,12 +2,14 @@ import React from 'react'
 import styles from '../css/Herosection.module.css'
 import { Button } from '../ui/Button'
 import ButtonTwo from '../ui/ButtonTwo'
+import { useRouter } from 'next/navigation'
 
 
 export default function Herosection() {
+  const router = useRouter()
 
   const test = () => {
-    console.log("as")
+  router.push('../../Login')
   }
   return (
     <section className={styles.hero}>
