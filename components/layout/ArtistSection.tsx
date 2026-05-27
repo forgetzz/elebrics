@@ -4,28 +4,28 @@ import ButtonTwo from '../ui/ButtonTwo'
 
 const listArtist = [
   {
-    title: "Budi",
-    url: "/artist/budi",
-    genre: "Pop",
-    image: "https://i.pravatar.cc/300?img=1",
+    title: "Ichad Bless (Local Pride from palua)",
+    url: "/artist/ic.jpeg",
+    genre: "Reggae Riddim",
+    image: "/artist/ic.jpeg",
   },
   {
-    title: "Aris",
-    url: "/artist/pria-solo",
-    genre: "R&B",
-    image: "https://i.pravatar.cc/300?img=3",
+    title: "Its Bhi (Local Prider From Papua)",
+    url: "/artist/as.jpeg",
+    genre: "HIP-HIP",
+    image: "/artist/as.jpeg",
   },
   {
-    title: "Rina Melodi",
-    url: "/artist/rina-melodi",
-    genre: "Jazz",
-    image: "https://i.pravatar.cc/300?img=5",
+    title: "ONCHO FLASH (NATIONAL ARTIS)",
+    url: "/artist/v.jpeg",
+    genre: "Hip-Hop",
+    image: "/artist/v.jpeg",
   },
   {
-    title: "Dimas Rock",
-    url: "/artist/dimas-rock",
-    genre: "Rock",
-    image: "https://i.pravatar.cc/300?img=8",
+    title: "DJ Dimas Gazebo",
+    url: "/artist/c.jpeg",
+    genre: "Remixer",
+    image: "/artist/c.jpeg",
   },
 ]
 
@@ -34,13 +34,13 @@ const trigger = () => {
 }
 export default function ArtistSection() {
   return (
-    <section className={styles.section}>
+    <section id='Artist' className={styles.section}>
       <div className={styles.container}>
 
         {/* Header */}
         <div className={styles.header}>
           <span className={styles.label}>Temukan</span>
-          <h2 className={styles.title}>Artist Pilihan</h2>
+          <h2 className={styles.title}>Artist Utama</h2>
           <p className={styles.subtitle}>
             Jelajahi koleksi artis berbakat dari berbagai genre musik terbaik.
           </p>

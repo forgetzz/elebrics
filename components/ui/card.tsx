@@ -12,7 +12,7 @@ export default function Card() {
   const metaData = [
     {
       title: "Countries",
-      result: 100,
+      result: 10,
       icon: <Globe size={28} />,
       suffix: "+",
     },

@@ -38,7 +38,7 @@ const listRilis = [
 
 export default function RilisSection() {
   return (
-    <section className={styles.section}>
+    <section id='Rilis' className={styles.section}>
       {/* Background noise texture */}
       <div className={styles.noise} aria-hidden="true" />
 

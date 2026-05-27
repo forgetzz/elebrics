@@ -22,8 +22,7 @@ export default function Home() {
   const platforms = [
     { name: 'Spotify', pct: 62 },
     { name: 'YouTube', pct: 20 },
-    { name: 'TikTok', pct: 11 },
-    { name: 'Apple Music', pct: 7 },
+
   ]
 
   const activities = [
@@ -165,24 +164,7 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Quick Stats */}
-            <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb', padding: '1.5rem' }}>
-              <h2 style={{ fontSize: 16, fontWeight: 700, color: '#111827', marginBottom: '1.5rem', margin: '0 0 1.5rem 0' }}>
-                📊 Ringkas
-              </h2>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1 }}>
-                <div>
-                  <div style={{ fontSize: 11, color: '#9ca3af', marginBottom: '0.5rem', textTransform: 'uppercase', fontWeight: 600 }}>Bulan Ini</div>
-                  <div style={{ fontSize: 20, fontWeight: 700, color: '#111827' }}>89,4K</div>
-                  <div style={{ fontSize: 12, color: '#16a34a', marginTop: '0.25rem' }}>streams</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: 11, color: '#9ca3af', marginBottom: '0.5rem', textTransform: 'uppercase', fontWeight: 600 }}>Hari Ini</div>
-                  <div style={{ fontSize: 20, fontWeight: 700, color: '#111827' }}>12,8K</div>
-                  <div style={{ fontSize: 12, color: '#16a34a', marginTop: '0.25rem' }}>streams</div>
-                </div>
-              </div>
-            </div>
+      
 
           </div>
         </div>

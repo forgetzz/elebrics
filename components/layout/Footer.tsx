@@ -15,10 +15,10 @@ const navLinks = {
     { label: 'Press Kit', href: '/press' },
   ],
   Dukungan: [
-    { label: 'Pusat Bantuan', href: '/help' },
-    { label: 'Hubungi Kami', href: '/contact' },
-    { label: 'Kebijakan Privasi', href: '/privacy' },
-    { label: 'Syarat & Ketentuan', href: '/terms' },
+    { label: 'Pusat Bantuan', href: '/' },
+    { label: 'Hubungi Kami', href: 'https://www.instagram.com/elbricmediagroup?igsh=and3c3ZkdjhlM3p2' },
+    { label: 'Kebijakan Privasi', href: '/' },
+    { label: 'Syarat & Ketentuan', href: '/' },
   ],
 }
 
@@ -31,7 +31,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer id='Footer' className={styles.footer}>
       {/* Noise texture */}
       <div className={styles.noise} aria-hidden="true" />
 
@@ -51,7 +51,7 @@ export default function Footer() {
   </a>
 
   <p className={styles.tagline}>
-    Rumah musik Indonesia. Dari artis lokal,
+    Rumah musik. Dari artis lokal,
     untuk pendengar dunia.
   </p>
 
@@ -63,14 +63,16 @@ export default function Footer() {
 
     <p>
       <strong>Alamat:</strong>
-      Jl. Musik Nusantara No. 88,
-      Makassar, Sulawesi Selatan,
-      Indonesia
+      Netherland
+    </p>
+    <p>
+      <strong>Perwakilan PT ELBRIC MUSIC : </strong>
+    Richard 
     </p>
 
     <p>
       <strong>Email:</strong>
-      info@elebricmusic.com
+    simbiakrichardboas@gmail.com
     </p>
   </div>
 
@@ -114,7 +116,7 @@ export default function Footer() {
         {/* ── Bottom Bar ── */}
         <div className={styles.bottomBar}>
           <p className={styles.copyright}>
-            © {new Date().getFullYear()} MusikaID. Hak cipta dilindungi.
+            © {new Date().getFullYear()} ELBRIC MUSIC. Hak cipta dilindungi.
           </p>
           <p className={styles.madeWith}>
             Dibuat dengan <span className={styles.heart}>♥</span> di Indonesia

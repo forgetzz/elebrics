@@ -36,7 +36,7 @@ const Trigger = () => {
 
 export default function AboutUs() {
     return (
-        <section className={styles.section}>
+        <section id='About' className={styles.section}>
             <div className={styles.container}>
 
 
@@ -46,20 +46,20 @@ export default function AboutUs() {
                     <div className={styles.textBlock}>
                         <span className={styles.label}>Tentang Kami</span>
                         <h2 className={styles.title}>
-                            Rumah Musik <br />
-                            <em className={styles.titleAccent}>Indonesia</em>
+                            PT. ELBRIC  <br />
+                            <em className={styles.titleAccent}>MUSIC</em>
                         </h2>
                         <p className={styles.body}>
-                            Kami adalah platform musik digital yang lahir dari kecintaan mendalam
-                            terhadap industri musik lokal. Sejak berdiri, kami telah menjadi
-                            jembatan antara artis berbakat dan jutaan pendengar di seluruh nusantara.
+                            PT. ELBRIC MUSIC berdiri sejak tahun 2024, namun perjalanan dan perjuangan kami telah dimulai sejak tahun 2010. Dengan proses yang tidak mudah, kami terus berkembang mengikuti era digital untuk menciptakan ruang yang lebih baik bagi musisi lokal dan label independen.
                         </p>
                         <p className={styles.body}>
-                            Dari single perdana hingga album penuh, setiap rilis mendapat panggung
-                            yang layak di sini — karena kami percaya bahwa musik Indonesia layak
-                            untuk bersinar di panggung dunia.
+                            Kami hadir untuk mendukung karya-karya original agar dapat berkembang lebih luas dan dikenal di industri musik digital. Transparansi menjadi salah satu prinsip utama kami kepada setiap member, karena kami percaya hubungan yang baik dibangun melalui kepercayaan dan komunikasi yang dekat.
+
                         </p>
-                       <Button func={() => Trigger()} textBtn='Pelajari Lebih lanjut'/>
+                        <p className={styles.body}>
+                            ELBRIC MUSIC juga membuka kesempatan bagi para artis, kreator, dan label independen untuk bertumbuh bersama, membangun relasi, dan saling mengenal lebih dekat dalam satu perjalanan menuju perkembangan musik yang lebih luas dan profesional.
+                        </p>
+                        <Button func={() => Trigger()} textBtn='Pelajari Lebih lanjut' />
                     </div>
 
                     <div className={styles.imageBlock}>
@@ -74,13 +74,13 @@ export default function AboutUs() {
                         {/* Floating badge */}
                         <div className={styles.badge}>
                             <span className={styles.badgeYear}>Est.</span>
-                            <span className={styles.badgeNum}>2017</span>
+                            <span className={styles.badgeNum}>2010</span>
                         </div>
                     </div>
                 </div>
 
 
-               
+
 
                 <div className={styles.valuesGrid}>
                     {values.map((item, index) => {
@@ -92,10 +92,10 @@ export default function AboutUs() {
                                     <Icon size={32} />
                                 </div>
 
-                             <span className={styles.valueIcon}><Icon size={25}/></span>
-                <h3 className={styles.valueTitle}>{item.title}</h3>
-                <p className={styles.valueDesc}>{item.desc}</p>
-       
+
+                                <h3 className={styles.valueTitle}>{item.title}</h3>
+                                <p className={styles.valueDesc}>{item.desc}</p>
+
 
                             </div>
                         );

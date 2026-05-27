@@ -21,17 +21,15 @@ export default function Herosection() {
           <span className={styles.eyebrow}>Premium Music Production</span>
 
           <h1 className={styles.heading}>
-            CRAFT YOUR{' '}
-            <span className={styles.accent}>SOUND,</span>
+           ELBRIC {' '}
+            <span className={styles.accent}> MUSIC,</span>
             <br />
-            DEFINE YOUR{' '}
-            <span className={styles.outline}>LEGACY</span>
+        {' '}
+            <span className={styles.outline}>   DISTRIBUTION</span>
           </h1>
 
           <p className={styles.description}>
-            Beats crafted for artists who refuse to blend in.
-            From trap to orchestral, we produce sounds that move
-            crowds and build careers — one track at a time.
+          Independent Label yang mendukung promosi karya artis dan label independen menuju platform musik global. Mengutamakan kualitas, karya original, dan original sound tanpa AI.
           </p>
 
           <div className={styles.actions}>

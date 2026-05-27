@@ -21,31 +21,32 @@ export default function Navbar() {
 
               <div className={styles.brandText}>
                 <span className={styles.brandTitle}>
-                  EL<span></span>BRIC
+                  EL<span></span>BRIC MUSIC DISTRIBUTION
                 </span>
 
-                <span className={styles.brandSub}>
-                  Music Production
-                </span>
+             
               </div>
             </a>
 
             {/* Desktop Links */}
             <ul className={styles.navLinks}>
               <li>
-                <a href="#">Beats</a>
+                <a href="#">Home</a>
               </li>
 
               <li>
-                <a href="#">Services</a>
+                <a href="#Rilis">Rilis Music</a>
               </li>
 
               <li>
-                <a href="#">Artists</a>
+                <a href="#Artist">Artists</a>
+              </li>
+              <li>
+                <a href="#About">About Us</a>
               </li>
 
               <li>
-                <a href="#">Studio</a>
+                <a href="#Footer">Contact us</a>
               </li>
 
              
