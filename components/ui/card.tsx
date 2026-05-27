@@ -12,25 +12,25 @@ export default function Card() {
   const metaData = [
     {
       title: "Countries",
-      result: 125,
+      result: 100,
       icon: <Globe size={28} />,
       suffix: "+",
     },
     {
-      title: "Music Data",
-      result: 8.4,
+      title: "Platfrom",
+      result: 100,
       icon: <Music2 size={28} />,
-      suffix: "M+",
+      suffix: "+",
     },
     {
       title: "Clients",
-      result: 3200,
+      result: 1200,
       icon: <Users size={28} />,
       suffix: "+",
     },
     {
       title: "Sub Aggregators",
-      result: 78,
+      result: 15,
       icon: <RadioTower size={28} />,
       suffix: "+",
     },

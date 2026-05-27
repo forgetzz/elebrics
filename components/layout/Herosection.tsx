@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import styles from '../css/Herosection.module.css'
 import { Button } from '../ui/Button'

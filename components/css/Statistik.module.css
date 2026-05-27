@@ -1,0 +1,327 @@
+.stRoot * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.stRoot {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--surface-alt);
+  min-height: 100vh;
+  padding: 20px 16px 100px;
+  color: var(--text);
+}
+
+/* Header */
+.stHeader {
+  margin-bottom: 20px;
+}
+
+.stTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stSub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Period selector */
+.stPeriodRow {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.stPeriodRow::-webkit-scrollbar {
+  display: none;
+}
+
+.stPeriodBtn {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.stPeriodBtn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* Stat cards */
+.stCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stCard {
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 14px 14px 12px;
+}
+
+.stCardIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.stCardLabel {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.stCardVal {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stCardChange {
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.up {
+  color: var(--green);
+}
+
+.down {
+  color: var(--primary-mid);
+}
+
+/* Chart area */
+.stChartCard {
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.stChartTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.stBarChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 120px;
+}
+
+.stBarCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.stBar {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  background: var(--primary-light);
+  transition: background 0.15s;
+  position: relative;
+  cursor: pointer;
+}
+
+.highlight {
+  background: var(--primary);
+}
+
+.stBarLabel {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Top tracks */
+.stTracksCard {
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.stTracksTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.stTrackItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.stTrackItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.stTrackRank {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-hint);
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.top {
+  color: var(--primary);
+}
+
+.stTrackThumb {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.stTrackInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.stTrackName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stTrackMeta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.stTrackStreams {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.stTrackBarWrap {
+  width: 100%;
+  background: var(--primary-light);
+  border-radius: 4px;
+  height: 3px;
+  margin-top: 4px;
+}
+
+.stTrackBarFill {
+  height: 3px;
+  border-radius: 4px;
+  background: var(--primary);
+}
+
+/* Platform breakdown */
+.stPlatformCard {
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 16px;
+}
+
+.stPlatformTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.stPlatformItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.stPlatformItem:last-child {
+  margin-bottom: 0;
+}
+
+.stPlatformDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.stPlatformName {
+  font-size: 12px;
+  color: var(--text);
+  flex: 1;
+}
+
+.stPlatformPct {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stPlatformBarWrap {
+  flex: 2;
+  background: var(--primary-light);
+  border-radius: 4px;
+  height: 5px;
+}
+
+.stPlatformBarFill {
+  height: 5px;
+  border-radius: 4px;
+  transition: width 0.5s;
+}

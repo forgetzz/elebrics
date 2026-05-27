@@ -1,4 +1,6 @@
+"use client"
 import { AuthType, AuthNode } from "@/types";
+import {auth } from"../lib/firebase"
 import React, { createContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 
@@ -11,7 +13,7 @@ export default function AuthContextProvider({
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const auth = getAuth();
+
 
     const unsub = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);

@@ -1,14 +1,15 @@
 "use client";
 import { FirebaseError } from "firebase/app";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { getDocs, query, where, collection } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import Image from "next/image";
+import Turnstile from "react-turnstile";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowRight, Code2, AlertCircle } from "lucide-react";
+import { useAuth } from "@/hooks";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -17,10 +18,23 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [lihatPassword, setLihatPassword] = useState(false);
   const router = useRouter();
+  const [captchaToken, setCaptchaToken] = useState("");
+  const { user } = useAuth()
 
+
+  useEffect(() => {
+    if (user) {
+      router.replace("../Home")
+    }
+  }, [])
   const handleLogin = async () => {
+    if (!captchaToken) {
+      return alert("Captcha belum siap");
+    }
+
     setLoading(true);
     setError("");
+
     if (!username || !password) {
       setError("Username dan password harus diisi.");
       setLoading(false);
@@ -28,39 +42,77 @@ export default function LoginPage() {
     }
 
     try {
-      const q = query(collection(db, "users"), where("username", "==", username));
+      // cek captcha di backend
+      const captchaRes = await fetch("/api/verify-captcha", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          captchaToken,
+        }),
+      });
+
+      const captchaData = await captchaRes.json();
+
+      if (!captchaData.success) {
+        throw new Error("Captcha gagal.");
+      }
+
+      // cari username di firestore
+      const q = query(
+        collection(db, "users"),
+        where("username", "==", username)
+      );
+
       const snapshot = await getDocs(q);
 
-      if (snapshot.empty) throw new Error("Username tidak ditemukan.");
+      if (snapshot.empty) {
+        throw new Error("Username tidak ditemukan.");
+      }
 
       const userData = snapshot.docs[0].data();
-      await signInWithEmailAndPassword(auth, userData.email, password);
-      router.replace("/dashboard");
+
+      await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        password
+      );
+
+      router.replace("/Home");
+
     } catch (err) {
-      let errorMessage = "Terjadi kesalahan saat login.";
+      let errorMessage =
+        "Terjadi kesalahan saat login.";
+
       if (err instanceof FirebaseError) {
         switch (err.code) {
           case "auth/user-not-found":
           case "auth/wrong-password":
           case "auth/invalid-credential":
-            errorMessage = "Username atau password salah.";
+            errorMessage =
+              "Username atau password salah.";
             break;
+
           case "auth/invalid-email":
             errorMessage = "Email tidak valid.";
             break;
+
           case "auth/too-many-requests":
-            errorMessage = "Terlalu banyak percobaan. Coba lagi nanti.";
+            errorMessage =
+              "Terlalu banyak percobaan. Coba lagi nanti.";
             break;
         }
       } else if (err instanceof Error) {
         errorMessage = err.message;
       }
+
       setError(errorMessage);
+
     } finally {
       setLoading(false);
     }
   };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") handleLogin();
   };
@@ -92,10 +144,10 @@ export default function LoginPage() {
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2 w-fit">
             <div className="w-8 h-8 rounded-lg bg-red-400 flex items-center justify-center">
-             <img src="/logo/logo.png" alt="" />
+              <img src="/logo/logo.png" alt="" />
             </div>
             <span className="text-white font-black text-xl" style={{ fontFamily: "'Syne', sans-serif" }}>
-              Elebrics<span className="text-red-400">Music</span>
+              Elbric<span className="text-red-400">Music</span>
             </span>
           </Link>
         </div>
@@ -127,14 +179,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <div className="relative z-10 flex gap-8">
-          {[["50+", "Courses"], ["12K+", "Students"], ["4.9★", "Rating"]].map(([val, label]) => (
-            <div key={label} className="flex flex-col gap-0.5">
-              <span className="text-white font-black text-xl" style={{ fontFamily: "'Syne', sans-serif" }}>{val}</span>
-              <span className="text-gray-600 text-xs uppercase tracking-widest">{label}</span>
-            </div>
-          ))}
-        </div>
+
 
         {/* Vertical line accent */}
         <div className="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-red-500/20 to-transparent" />
@@ -147,10 +192,10 @@ export default function LoginPage() {
           {/* Mobile Logo */}
           <div className="flex lg:hidden items-center gap-2 mb-10">
             <div className="w-7 h-7 rounded-lg bg-red-400 flex items-center justify-center">
-            <img src="/logo/logo.png" alt="" />
+              <img src="/logo/logo.png" alt="" />
             </div>
             <span className="text-white font-black text-lg" style={{ fontFamily: "'Syne', sans-serif" }}>
-              Elebrics<span className="text-red-400">Music</span>
+              Elbric<span className="text-red-400">Music</span>
             </span>
           </div>
 
@@ -243,6 +288,15 @@ export default function LoginPage() {
                 {lihatPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
+            <Turnstile className="p-5 flex justify-center items-center mt-5"
+              sitekey={
+                process.env
+                  .NEXT_PUBLIC_TURNSTILE_SITE_KEY!
+              }
+              onVerify={(token) => {
+                setCaptchaToken(token);
+              }}
+            />
           </div>
 
           {/* Submit */}

@@ -58,7 +58,7 @@ export default function Footer() {
   {/* Company Info */}
   <div className={styles.companyInfo}>
     <p>
-      <strong>CEO:</strong> ICAHD
+      <strong>CEO:</strong> Lusia M
     </p>
 
     <p>

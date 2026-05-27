@@ -11,23 +11,30 @@ export interface ButtonTypes2 {
   textColor: string;
 }
 
-
 export interface ThemeContextTypes {
-    themeToggle: () => void
-    IsDark : boolean
+  themeToggle: () => void;
+  IsDark: boolean;
 }
 
 export interface ThemeProvider {
-    children : ReactNode
+  children: ReactNode;
 }
 
 export interface AuthNode {
-    children : ReactNode
+  children: ReactNode;
 }
 
-
 export type AuthType = {
+  user: FirebaseUser | null;
+  isLoading: boolean;
+};
 
-    user : FirebaseUser | null
-    isLoading : boolean
+export interface UserData {
+  name: string;
+  sponsorUsername: string;
+  email: string;
+  bank: string;
+  rekening: string;
+  whatsapp: string;
+  imageProfile: string;
 }

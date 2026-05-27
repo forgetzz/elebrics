@@ -1,4 +1,4 @@
-import { AlignJustifyIcon, Disc3 } from 'lucide-react'
+"use client"
 import React, { useState } from 'react'
 import styles from "../css/Navbar.module.css"
 import { Button } from '../ui/Button'
@@ -21,7 +21,7 @@ export default function Navbar() {
 
               <div className={styles.brandText}>
                 <span className={styles.brandTitle}>
-                  EL<span>E</span>BRIC
+                  EL<span></span>BRIC
                 </span>
 
                 <span className={styles.brandSub}>
