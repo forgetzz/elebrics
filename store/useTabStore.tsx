@@ -1,6 +1,6 @@
 // src/store/tabStore.ts
 import { create } from "zustand";
-import { TabKey } from "@/constant/Tabkey";
+import { TabKey } from "@/constants/Tabkey";
 
 interface TabStore {
   activeTab: TabKey;

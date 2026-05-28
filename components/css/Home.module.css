@@ -1,0 +1,465 @@
+.page {
+  min-height: 100vh;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+}
+
+/* ── Header ── */
+.header {
+
+  padding: 0.25rem 0.5rem;
+
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.headerInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 14px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #d85a30 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.headerUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerEmail {
+  font-size: 13px;
+
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c4b5fd, #a78bfa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+
+}
+
+/* ── Main ── */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── Welcome ── */
+.welcome {
+  margin-bottom: 2rem;
+}
+
+.welcomeTitle {
+  font-size: 26px;
+  font-weight: 700;
+
+  margin: 0 0 4px;
+  letter-spacing: -0.4px;
+}
+
+.welcomeSub {
+  font-size: 14px;
+
+  margin: 0;
+}
+
+/* ── Stats ── */
+/* .statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+@media (max-width: 768px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.statCell {
+  padding: 1.5rem;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.statCell:nth-child(4n) { border-right: none; }
+.statCell:nth-last-child(-n+4) { border-bottom: none; }
+
+@media (max-width: 768px) {
+  .statCell:nth-child(2n) { border-right: none; }
+  .statCell:nth-last-child(-n+2) { border-bottom: none; }
+  .statCell:nth-child(3), .statCell:nth-child(4) { border-bottom: none; }
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+}
+
+.statValue {
+  font-size: 26px;
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.statChange {
+  font-size: 12px;
+  font-weight: 500;
+
+} */
+
+/* ── Two-column ── */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+@media (max-width: 860px) {
+  .twoCol { grid-template-columns: 1fr; }
+}
+
+/* ── Cards ── */
+.card {
+  padding: 1.5rem;
+  border-radius: 24px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02)
+  );
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(14px);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.songCount {
+  font-size: 0.85rem;
+  opacity: 0.65;
+}
+
+.trackList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.trackRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.8rem;
+  border-radius: 18px;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.trackRow:hover {
+  background: rgba(255,255,255,0.05);
+  transform: translateX(4px);
+}
+
+.trackRank {
+  width: 28px;
+
+  font-size: 1rem;
+  font-weight: 700;
+
+  opacity: 0.6;
+}
+
+.trackImageWrapper {
+  position: relative;
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  flex-shrink: 0;
+}
+
+.trackImage {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+.trackRow:hover .trackImage {
+  transform: scale(1.08);
+}
+
+.playOverlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0,0,0,0.45);
+
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  font-size: 1rem;
+}
+
+.trackRow:hover .playOverlay {
+  opacity: 1;
+}
+
+.trackInfo {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.trackTitle {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.trackArtist {
+  font-size: 0.88rem;
+  opacity: 0.65;
+}
+
+.trackMeta {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+/* ── Platforms ── */
+.platformCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.platformItem {
+  margin-bottom: 1.25rem;
+}
+
+.platformItem:last-child { margin-bottom: 0; }
+
+.platformMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.platformName {
+  font-size: 13px;
+  font-weight: 500;
+
+}
+
+.platformPct {
+  font-size: 12px;
+  font-weight: 600;
+
+}
+
+.platformTrack {
+  width: 100%;
+  height: 5px;
+
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.platformFill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #d85a30, #f97316);
+  transition: width 0.4s ease;
+}
+
+/* ── Activities ── */
+.activityCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.activityContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.activityRow {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.activityRow:last-child { border-bottom: none; }
+
+.activityIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.activityText {
+  font-size: 13px;
+
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.activityTime {
+  font-size: 11px;
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 30px;
+}
+
+.statCard {
+  position: relative;
+  overflow: hidden;
+
+  padding: 1.2rem;
+
+  border-radius: 20px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(10px);
+
+  transition: 
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(255,255,255,0.18);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.15),
+    0 0 20px rgba(255,255,255,0.05);
+}
+
+.statTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 1rem;
+}
+
+.iconWrap {
+  width: 45px;
+  height: 45px;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.08);
+
+  font-size: 1.2rem;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.statChange {
+  font-size: 0.85rem;
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+}

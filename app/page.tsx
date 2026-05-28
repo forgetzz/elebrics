@@ -5,7 +5,7 @@ import ArtistSection from "@/components/layout/ArtistSection";
 import Footer from "@/components/layout/Footer";
 import RilisSection from "@/components/layout/RilisSection";
 
-import { useTheme } from "@/hooks/useTheme";
+
 
 
 export default function Home() {

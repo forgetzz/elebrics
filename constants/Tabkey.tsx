@@ -8,7 +8,6 @@ import UploadMusic from "@/components/Dashboard/upload";
 export const tabStrategies= {
   home: <Home />,
 upload : <UploadMusic/>,
-  chart: <StatistikPage />,
   profile: <Profile />,
 };
 

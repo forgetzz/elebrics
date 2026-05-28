@@ -61,3 +61,194 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #c8102e #0a0a0a;
 }
+
+.bubble {
+  position: absolute;
+  border-radius: 9999px;
+
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255,120,120,0.35),
+    rgba(220,38,38,0.12),
+    transparent 70%
+  );
+
+  filter: blur(10px);
+
+  animation: floatBubble linear infinite;
+}
+
+/* bubble sizes & positions */
+
+.bubble1 {
+  width: 220px;
+  height: 220px;
+
+  left: -60px;
+  top: 10%;
+
+  animation-duration: 18s;
+}
+
+.bubble2 {
+  width: 160px;
+  height: 160px;
+
+  right: 10%;
+  top: 20%;
+
+  animation-duration: 14s;
+}
+
+.bubble3 {
+  width: 300px;
+  height: 300px;
+
+  bottom: -120px;
+  left: 20%;
+
+  animation-duration: 22s;
+}
+
+.bubble4 {
+  width: 140px;
+  height: 140px;
+
+  bottom: 20%;
+  right: -40px;
+
+  animation-duration: 16s;
+}
+
+.bubble5 {
+  width: 180px;
+  height: 180px;
+
+  top: 50%;
+  left: 45%;
+
+  animation-duration: 20s;
+}
+
+/* animation */
+
+@keyframes floatBubble {
+  0% {
+    transform:
+      translateY(0px)
+      translateX(0px)
+      scale(1);
+  }
+
+  25% {
+    transform:
+      translateY(-20px)
+      translateX(10px)
+      scale(1.05);
+  }
+
+  50% {
+    transform:
+      translateY(10px)
+      translateX(-10px)
+      scale(0.96);
+  }
+
+  75% {
+    transform:
+      translateY(-12px)
+      translateX(8px)
+      scale(1.03);
+  }
+
+  100% {
+    transform:
+      translateY(0px)
+      translateX(0px)
+      scale(1);
+  }
+}
+
+.bubbleContainer {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.spriteBubble {
+  position: absolute;
+
+  bottom: -120px;
+mix-blend-mode: screen;
+  border-radius: 999px;
+
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255,255,255,0.35),
+      rgba(239,68,68,0.25),
+      rgba(239,68,68,0.08)
+    );
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(4px);
+
+  box-shadow:
+    0 0 12px rgba(239,68,68,0.25),
+    inset 0 0 12px rgba(255,255,255,0.08);
+
+  animation: riseBubble linear infinite;
+
+  opacity: 0;
+}
+
+/* movement */
+
+@keyframes riseBubble {
+  0% {
+    transform:
+      translateY(0)
+      translateX(0)
+      scale(0.8);
+
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  25% {
+    transform:
+      translateY(-25vh)
+      translateX(12px)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(-50vh)
+      translateX(-18px)
+      scale(1.08);
+  }
+
+  75% {
+    transform:
+      translateY(-75vh)
+      translateX(10px)
+      scale(0.95);
+  }
+
+  100% {
+    transform:
+      translateY(-120vh)
+      translateX(-10px)
+      scale(1.2);
+
+    opacity: 0;
+  }
+}

@@ -38,3 +38,25 @@ export interface UserData {
   whatsapp: string;
   imageProfile: string;
 }
+
+export interface registerType {
+  name: string;
+  email: string;
+  password: string;
+  namaRekening: string;
+  whatsapp: string;
+  bank: string;
+  username: string;
+  rekening: string;
+}
+
+
+export interface Datas {
+  name: string 
+  username: string
+  verifikasi : boolean
+  pendapatan: string
+  totalStrem: string 
+  totalLagu: string
+  
+}

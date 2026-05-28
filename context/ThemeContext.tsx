@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 import { ThemeContextTypes, ThemeProvider } from "../types/index"
 
 
-export const ThemeContext = createContext<ThemeContextTypes | undefined>(undefined)
+export const ThemesContext = createContext<ThemeContextTypes | undefined>(undefined)
 
 export function ThemeProviderContext({ children }: ThemeProvider) {
     const [IsDark, setIsDark] = useState(false)
@@ -12,8 +12,8 @@ export function ThemeProviderContext({ children }: ThemeProvider) {
 
 
     return (
-        <ThemeContext.Provider value={{IsDark, themeToggle}}>
+        <ThemesContext.Provider value={{IsDark, themeToggle}}>
             {children}
-        </ThemeContext.Provider>
+        </ThemesContext.Provider>
     )
 }

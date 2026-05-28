@@ -99,7 +99,7 @@ export default function RilisSection() {
 
         {/* CTA */}
         <div className={styles.ctaWrapper}>
-          <a href="/rilis" className={styles.ctaButton}>
+          <a href="/" className={styles.ctaButton}>
             Lihat Semua Rilis
           </a>
         </div>

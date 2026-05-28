@@ -14,20 +14,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { cid } = await pinata.upload.public.file(file);
+    console.log("Uploading:", file.name);
+
+    const upload = await pinata.upload.public.file(file);
+
+    console.log("Upload result:", upload);
+
+    const cid = upload.cid;
 
     const url = await pinata.gateways.public.convert(cid);
 
     return NextResponse.json(
-      { url },
+      {
+        cid,
+        url,
+      },
       { status: 200 }
     );
-
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.error("UPLOAD ERROR:", error);
 
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      {
+        error: error.message || "Internal Server Error",
+      },
       { status: 500 }
     );
   }

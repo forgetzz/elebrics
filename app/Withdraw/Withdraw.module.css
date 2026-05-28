@@ -1,0 +1,98 @@
+/* app/withdraw/withdraw.module.css */
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f172a;
+  padding: 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #1e293b;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.balanceBox {
+  background: #334155;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.balanceLabel {
+  color: #cbd5e1;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.balance {
+  color: #FF0000;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  color: #e2e8f0;
+  font-size: 14px;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  background: #0f172a;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.inputGroup input:focus {
+  border-color: #FF0000;
+}
+
+.button {
+  margin-top: 10px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #FF0000;
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}

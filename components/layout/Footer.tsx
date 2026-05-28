@@ -23,7 +23,7 @@ const navLinks = {
 }
 
 const socials = [
-  { label: 'IG', href: 'https://instagram.com' },
+  { label: 'IG', href: 'https://www.instagram.com/elbricmediagroup?igsh=and3c3ZkdjhlM3p2' },
   { label: 'TT', href: 'https://tiktok.com' },
   { label: 'YT', href: 'https://youtube.com' },
   { label: 'SP', href: 'https://spotify.com' },
@@ -44,54 +44,55 @@ export default function Footer() {
         <div className={styles.grid}>
 
           {/* Brand Column */}
-      <div className={styles.brandCol}>
-  <a href="/" className={styles.logo}>
-    <span className={styles.logoAccent}></span>
-    ELEBRIC MUSIC
-  </a>
+          <div className={styles.brandCol}>
+            <a href="/" className={styles.logo}>
+              <span className={styles.logoAccent}></span>
+              ELBRIC MUSIC
+            </a>
 
-  <p className={styles.tagline}>
-    Rumah musik. Dari artis lokal,
-    untuk pendengar dunia.
-  </p>
+            <p className={styles.tagline}>
+              Rumah musik. Dari artis lokal,
+              untuk pendengar dunia.
+            </p>
 
-  {/* Company Info */}
-  <div className={styles.companyInfo}>
-    <p>
-      <strong>CEO:</strong> Lusia M
-    </p>
+            {/* Company Info */}
+            <div className={styles.companyInfo}>
+              <p>
+                <strong>FOUNDER:</strong> I.S
+              </p>
 
-    <p>
-      <strong>Alamat:</strong>
-      Netherland
-    </p>
-    <p>
-      <strong>Perwakilan PT ELBRIC MUSIC : </strong>
-    Richard 
-    </p>
+              <p>
+                <strong>Founder & Chief Executive Officer
+                  Official Representative :
+               </strong> PT. ELBRIC MUSIC DISTRIBUTION
+                  Independent Music Distribution Company
 
-    <p>
-      <strong>Email:</strong>
-    simbiakrichardboas@gmail.com
-    </p>
-  </div>
+              </p>
 
-  {/* Social icons */}
-  <div className={styles.socials}>
-    {socials.map((s) => (
-      <a
-        key={s.label}
-        href={s.href}
-        className={styles.socialBtn}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={s.label}
-      >
-        {s.label}
-      </a>
-    ))}
-  </div>
-</div>
+              <p>
+                <strong>OWNER : </strong> E.M
+
+              </p>
+
+
+            </div>
+
+            {/* Social icons */}
+            <div className={styles.socials}>
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  className={styles.socialBtn}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </div>
           {/* Nav Columns */}
           {Object.entries(navLinks).map(([group, links]) => (
             <div key={group} className={styles.navCol}>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProviderContext } from "@/context/ThemeContext";
 import AuthContextProvider from "@/context/AuthContext";
+import { useTheme } from "@/hooks";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,17 +21,23 @@ export const metadata: Metadata = {
   description: "Elbric music production",
 };
 
+
 export default function RootLayout({
+
+  
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body  className={`min-h-full flex flex-col `}>
 
         <AuthContextProvider>
           <ThemeProviderContext>

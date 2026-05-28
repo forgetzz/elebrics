@@ -11,7 +11,7 @@
 .main {
   flex: 1;
   padding: 1rem;
-  padding-bottom: 100px;
+
 }
 
 /* =========================
@@ -69,7 +69,6 @@
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
-
   width: calc(100% - 24px);
   max-width: 500px;
 
@@ -77,13 +76,11 @@
   justify-content: space-around;
   align-items: center;
 
-  padding: 12px;
+  padding: 1px;
 
   border-radius: 28px;
 
-
-
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(200px);
   -webkit-backdrop-filter: blur(20px);
 
   border: 1px solid var(--border);

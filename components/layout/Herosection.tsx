@@ -9,8 +9,12 @@ import { useRouter } from 'next/navigation'
 export default function Herosection() {
   const router = useRouter()
 
-  const test = () => {
+  const Login = () => {
   router.push('../../Login')
+  }
+
+  const Signup = () => {
+    router.push("../../singup")
   }
   return (
     <section className={styles.hero}>
@@ -33,8 +37,8 @@ export default function Herosection() {
           </p>
 
           <div className={styles.actions}>
-         <Button textBtn='Login' func={() => test()}/>
-          <ButtonTwo textBtn="Singup" func={() => test()} textColor='text-white'/>
+         <Button textBtn='Login' func={() => Login()}/>
+          <ButtonTwo textBtn="Singup" func={() => Signup()} textColor='text-white'/>
           </div>
 
      

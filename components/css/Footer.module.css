@@ -204,7 +204,7 @@
   font-family: 'Courier New', monospace;
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: var(--gray-500);
+  color: white;
   margin: 0;
 }
 
@@ -212,7 +212,7 @@
   font-family: 'Courier New', monospace;
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: var(--gray-500);
+  color: white;
   margin: 0;
 }
 

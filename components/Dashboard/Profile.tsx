@@ -5,6 +5,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { Camera, Save, X, Pencil, LogOut, User, Link, Phone, Building2, CreditCard, Wallet } from "lucide-react";
 import { signOut } from "firebase/auth";
+import { useTheme } from "@/hooks";
 
 
 
@@ -31,6 +32,7 @@ export default function ProfilePage() {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState<UserData>(userData);
+    const {ThemeHelper} = useTheme()
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -53,7 +55,7 @@ export default function ProfilePage() {
     const handleLogout = async () => {
         try {
             await signOut(auth);
-            window.location.href = "/login";
+            window.location.href = "/Login";
         } catch {
             alert("Gagal logout");
         }
@@ -96,7 +98,7 @@ export default function ProfilePage() {
 
             {/* Page label */}
             <p className="mb-5 text-xs uppercase tracking-widest"
-                style={{ fontFamily: "'DM Mono', monospace", color: " rgba(220, 38, 38, 0.5)", letterSpacing: "0.2em" }}>
+                style={{ fontFamily: "'DM Mono', monospace", color: `${ThemeHelper.TextColor}`, letterSpacing: "0.2em" }}>
         // profile
             </p>
 
@@ -107,30 +109,30 @@ export default function ProfilePage() {
                     background: "linear-gradient(135deg, #FF0000, #FF002354)"
                 }}>
                     <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center"
-                        style={{ background: "#0a1f0e" }}>
+                        style={{ background: `${ThemeHelper.ThemeBgPrimary}` }}>
                         {userData.imageProfile ? (
                             <img src={userData.imageProfile} alt="avatar" className="w-full h-full object-cover" />
                         ) : (
-                            <span className="text-3xl font-black" style={{ color: "#FF0000" }}>
+                            <span className="text-3xl font-black" style={{ color: `${ThemeHelper.TextColor}` }}>
                                 {userData.name ? getInitials(userData.name) : "?"}
                             </span>
                         )}
                     </div>
-                    <button
+                    {/* <button
                         onClick={() => fileInputRef.current?.click()}
                         className="absolute bottom-0.5 right-0.5 w-7 h-7 rounded-full flex items-center justify-center transition-all"
                         style={{ background: "#052e16", border: "2px solid #020c04" }}
                     >
                         <Camera size={12} color="#FF0000" />
-                    </button>
+                    </button> */}
                     <input type="file" accept="image/*" ref={fileInputRef}
                         className="hidden" />
                 </div>
 
-                <h1 className="text-xl font-black mb-0.5" style={{ color: "#FF002354" }}>
+                <h1 className="text-xl font-black mb-0.5" style={{ color: `${ThemeHelper.TextColor}` }}>
                     {userData.name || "—"}
                 </h1>
-                <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#FF002354" }}>
+                <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: `${ThemeHelper.TextColor}` }}>
                     {userData.email || "—"}
                 </p>
             </div>
@@ -146,7 +148,7 @@ export default function ProfilePage() {
                     <p className="mb-4 flex items-center gap-2"
                         style={{
                             fontFamily: "'DM Mono', monospace", fontSize: 9, letterSpacing: "0.18em",
-                            color: "#FF0012", textTransform: "uppercase"
+                           color: `${ThemeHelper.TextColor}`, textTransform: "uppercase"
                         }}>
                         informasi akun
                         <span className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
@@ -159,6 +161,7 @@ export default function ProfilePage() {
                         const Icon = field.icon;
                         const isLast = i === FIELDS.length - 1;
                         const isEVM = field.key === "addressEVM";
+         
                         return (
                             <div key={field.key}
                                 className={`flex items-center py-2.5 ${!isLast ? "border-b" : ""}`}
@@ -168,7 +171,7 @@ export default function ProfilePage() {
                                     <Icon size={12} color="#166534" />
                                 </div>
                                 <span className="min-w-[80px] uppercase"
-                                    style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: "#374151", letterSpacing: "0.08em" }}>
+                                    style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: `${ThemeHelper.TextColor}`, letterSpacing: "0.08em" }}>
                                     {field.label}
                                 </span>
                                 {isEditing ? (

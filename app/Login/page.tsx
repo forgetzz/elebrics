@@ -1,15 +1,18 @@
 "use client";
 import { FirebaseError } from "firebase/app";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import { getDocs, query, where, collection } from "firebase/firestore";
+import { getDocs, query, where, collection, getDoc, doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Turnstile from "react-turnstile";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowRight, Code2, AlertCircle } from "lucide-react";
 import { useAuth } from "@/hooks";
+import { Datas } from "@/types";
+import Bubble from "@/components/ui/Bubble";
+
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -18,31 +21,33 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [lihatPassword, setLihatPassword] = useState(false);
   const router = useRouter();
-  const [captchaToken, setCaptchaToken] = useState("");
+  const [verifikasi, setVerifikasi] = useState<boolean | null>(null);
+  const [captchaToken, setCaptchaToken] =
+    useState<string | null>(null);
   const { user } = useAuth()
-
 
   useEffect(() => {
     if (user) {
       router.replace("../Home")
     }
-  }, [])
+  }, [user]);
+
   const handleLogin = async () => {
-    if (!captchaToken) {
-      return alert("Captcha belum siap");
-    }
+    if (loading) return;
 
     setLoading(true);
     setError("");
 
-    if (!username || !password) {
-      setError("Username dan password harus diisi.");
-      setLoading(false);
-      return;
-    }
-
     try {
-      // cek captcha di backend
+
+      if (!username || !password) {
+        throw new Error("Username dan password wajib diisi.");
+      }
+
+      if (!captchaToken) {
+        throw new Error("Captcha belum siap.");
+      }
+
       const captchaRes = await fetch("/api/verify-captcha", {
         method: "POST",
         headers: {
@@ -53,13 +58,19 @@ export default function LoginPage() {
         }),
       });
 
-      const captchaData = await captchaRes.json();
-
-      if (!captchaData.success) {
-        throw new Error("Captcha gagal.");
+      if (!captchaRes.ok) {
+        throw new Error("Gagal verifikasi captcha.");
       }
 
-      // cari username di firestore
+      const captchaData = await captchaRes.json();
+
+      console.log("CAPTCHA:", captchaData);
+
+      if (!captchaData.success) {
+        throw new Error("Captcha gagal diverifikasi.");
+      }
+
+
       const q = query(
         collection(db, "users"),
         where("username", "==", username)
@@ -67,25 +78,40 @@ export default function LoginPage() {
 
       const snapshot = await getDocs(q);
 
+      console.log("SNAPSHOT:", snapshot.empty);
+
       if (snapshot.empty) {
         throw new Error("Username tidak ditemukan.");
       }
 
       const userData = snapshot.docs[0].data();
 
-      await signInWithEmailAndPassword(
-        auth,
-        userData.email,
-        password
-      );
+      console.log("USER DATA:", userData);
+
+      if (!userData.email) {
+        throw new Error("Email user tidak ditemukan.");
+      }
+
+
+      const userCredential =
+        await signInWithEmailAndPassword(
+          auth,
+          userData.email,
+          password
+        );
+
+      console.log("LOGIN SUCCESS:", userCredential.user);
 
       router.replace("/Home");
 
-    } catch (err) {
+    } catch (err: any) {
+      console.error("LOGIN ERROR:", err);
+
       let errorMessage =
         "Terjadi kesalahan saat login.";
 
-      if (err instanceof FirebaseError) {
+      // Firebase Auth Error
+      if (err?.code) {
         switch (err.code) {
           case "auth/user-not-found":
           case "auth/wrong-password":
@@ -95,13 +121,23 @@ export default function LoginPage() {
             break;
 
           case "auth/invalid-email":
-            errorMessage = "Email tidak valid.";
+            errorMessage = "Format email tidak valid.";
             break;
 
           case "auth/too-many-requests":
             errorMessage =
-              "Terlalu banyak percobaan. Coba lagi nanti.";
+              "Terlalu banyak percobaan login. Coba lagi nanti.";
             break;
+
+          case "permission-denied":
+            errorMessage =
+              "Akses Firestore ditolak.";
+            break;
+
+          default:
+            errorMessage =
+              err.message ||
+              "Login gagal.";
         }
       } else if (err instanceof Error) {
         errorMessage = err.message;
@@ -117,8 +153,10 @@ export default function LoginPage() {
     if (e.key === "Enter") handleLogin();
   };
 
+
   return (
     <div className="min-h-screen flex bg-[#050A05]">
+      <Bubble />
 
       {/* Left Panel — Branding */}
       <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 relative overflow-hidden">
@@ -288,15 +326,15 @@ export default function LoginPage() {
                 {lihatPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
-            <Turnstile className="p-5 flex justify-center items-center mt-5"
-              sitekey={
-                process.env
-                  .NEXT_PUBLIC_TURNSTILE_SITE_KEY!
-              }
-              onVerify={(token) => {
-                setCaptchaToken(token);
-              }}
-            />
+            <div className="relative z-50 overflow-visible">
+              <Turnstile
+                className="p-5 flex justify-center items-center mt-5"
+                sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                onVerify={(token) => {
+                  setCaptchaToken(token);
+                }}
+              />
+            </div>
           </div>
 
           {/* Submit */}

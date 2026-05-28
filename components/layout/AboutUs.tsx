@@ -65,7 +65,7 @@ export default function AboutUs() {
                     <div className={styles.imageBlock}>
                         <div className={styles.imageWrapper}>
                             <img
-                                src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80"
+                                src="/logo/logo1.png"
                                 alt="Studio musik"
                                 className={styles.image}
                             />

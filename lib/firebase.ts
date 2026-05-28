@@ -5,19 +5,20 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAujOFItxhfQgn0awo2mCpcRJ1MrQ1ok50',
-  authDomain: "bootcamp-b226f.firebaseapp.com",
-  projectId: "bootcamp-b226f",
-  storageBucket: "bootcamp-b226f.firebasestorage.app",
-  messagingSenderId: "632732553739",
-  appId: "1:632732553739:web:8582e195bd37aee0efed0e",
-  measurementId: "G-4VMTQ1BDHT"
+  apiKey: "AIzaSyAsjhxyxe3GSCoV9Cb1KNJVMuL_PkTenHc",
+  authDomain: "elebric.firebaseapp.com",
+  projectId: "elebric",
+  storageBucket: "elebric.firebasestorage.app",
+  messagingSenderId: "219102645128",
+  appId: "1:219102645128:web:c1633c4eac03ac47fd483d",
+  measurementId: "G-W10FMWMH7H"
 };
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
 
 export { auth, db };
 export { storage };
