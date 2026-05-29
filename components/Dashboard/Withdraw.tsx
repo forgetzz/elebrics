@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 
-import styles from "./Withdraw.module.css";
+import styles from "../css/Withdraw.module.css";
 
 import {
     collection,
@@ -14,7 +14,7 @@ import { db } from "@/lib/firebase";
 
 import { useAuth } from "@/hooks/useAuth";
 
-export default function Page() {
+export default function Withdraw() {
     const { user } = useAuth();
 
     const [balance, setBalance] = useState(0);

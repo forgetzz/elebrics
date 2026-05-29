@@ -111,10 +111,7 @@ export default function StatistikPage() {
           <div className={styles.stCardIcon}> <BanknoteArrowDown size={30} /> </div>
           <div className={styles.stCardLabel}>Est. Royalti</div>
           <div className={styles.stCardVal}>{stats.revenue}</div>
-          <div className="w-[10%] " >
-            <Button textBtn="Withdraw" func={() => wd()}  />
-
-          </div>
+        
         </div>
       </div>
 

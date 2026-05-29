@@ -66,30 +66,55 @@
 
 .bottomNav {
   position: fixed;
-  bottom: 16px;
+  bottom: 0; /* rapat ke bawah */
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 24px);
-  max-width: 500px;
+  width: 100%;
+  max-width: 100%;
 
   display: flex;
   justify-content: space-around;
   align-items: center;
 
-  padding: 1px;
+  padding: 6px 1px calc(6px + env(safe-area-inset-bottom));
 
-  border-radius: 28px;
+  /* radius hanya atas */
+  border-radius: 28px 28px 0 0;
 
-  backdrop-filter: blur(200px);
-  -webkit-backdrop-filter: blur(20px);
 
-  border: 1px solid var(--border);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
 
-  box-shadow: var(--shadow);
+
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
 
   z-index: 999;
 }
 
+.navBtn {
+  position: relative;
+  border: none;
+  background: transparent;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+  cursor: pointer;
+
+  color: var(--text-soft);
+
+  padding: 12px;
+  border-radius: 18px;
+
+  transition: all 0.25s ease;
+
+  min-width: 70px;
+}
 .navBtn {
   position: relative;
   border: none;

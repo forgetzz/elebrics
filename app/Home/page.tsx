@@ -1,5 +1,5 @@
 "use client"
-import { Home, Upload, BarChart2, User, Moon, Sun, UploadIcon } from "lucide-react";
+import { Home, Upload, BarChart2, User, Moon, Sun, UploadIcon, BanknoteArrowDown } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import styles from "./Home.module.css"
 import { TabKey, tabStrategies } from "@/constants/Tabkey";
@@ -13,11 +13,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const nav_items: { key: TabKey; icon: React.ReactNode; label: string }[] = [
-    { key: "home", icon: <Home size={22} />, label: "Beranda" },
-  
-    { key: "upload", icon: <UploadIcon size={22} />, label: "Upload" },
-    { key: "profile", icon: <User size={22} />, label: "Profil" },
-];
+    { key: "home", icon: <Home size={19} />, label: "Beranda" },
+  {key: "withdraw" , icon: <BanknoteArrowDown size={19} />, label:"Withdraw"},
+    { key: "upload", icon: <UploadIcon className="bg0-" size={22} />, label: "Upload" },
+    { key: "profile", icon: <User size={19} />, label: "Profil" },
 
 export default function DashboardLayout() {
     const { activeTab, setActiveTab } = useTabStore();
@@ -60,7 +59,7 @@ export default function DashboardLayout() {
         <div className={`${styles.root} ${ThemeHelper.ThemeBgPrimary}`}>
             <main className={styles.main}>{tabStrategies[activeTab]}</main>
 
-            <nav className={styles.bottomNav}>
+            <nav className={`${styles.bottomNav} ${ThemeHelper.ThemeBgPrimary}`}>
                 {nav_items.map(({ key, icon, label }) => (
                     <button
                         key={key}
