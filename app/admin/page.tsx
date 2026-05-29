@@ -25,13 +25,13 @@ type WithdrawType = {
   bank: string;
   name: string;
   status: string;
-}; 
+};
 
 type UserType = {
   uid: string;
   username: string;
   email: string;
- verifikasi?: boolean;
+  verifikasi?: boolean;
   spotify?: string;
   yt?: string;
   uploadedAt?: string;
@@ -39,8 +39,8 @@ type UserType = {
 
 export default function AdminPage() {
   const [users, setUsers] = useState<UserType[]>([]);
-const [withdraws, setWithdraws] =
-  useState<WithdrawType[]>([]);
+  const [withdraws, setWithdraws] =
+    useState<WithdrawType[]>([]);
   const { user } = useAuth();
 
   const router = useRouter();
@@ -63,7 +63,7 @@ const [withdraws, setWithdraws] =
   const handleApprove = async (uid: string) => {
     try {
       await updateDoc(doc(db, "users", uid), {
-        verified: true,
+        verifikasi: true,
       });
 
       fetchUsers();
@@ -75,7 +75,7 @@ const [withdraws, setWithdraws] =
   const handleReject = async (uid: string) => {
     try {
       await updateDoc(doc(db, "users", uid), {
-        verified: false,
+        verifikasi: false,
       });
 
       fetchUsers();
@@ -92,162 +92,162 @@ const [withdraws, setWithdraws] =
 
 
   const fetchWithdraws = async () => {
-  try {
-    const usersSnap = await getDocs(
-      collection(db, "balances")
-    );
+    try {
+      const usersSnap = await getDocs(
+        collection(db, "balances")
+      );
 
-    let allWithdraws: WithdrawType[] = [];
+      let allWithdraws: WithdrawType[] = [];
 
-    for (const userDoc of usersSnap.docs) {
-      const uid = userDoc.id;
+      for (const userDoc of usersSnap.docs) {
+        const uid = userDoc.id;
 
-      const wdSnap = await getDocs(
-        collection(
+        const wdSnap = await getDocs(
+          collection(
+            db,
+            "balances",
+            uid,
+            "withdraw_history"
+          )
+        );
+
+        const wdData = wdSnap.docs.map((doc) => ({
+          uid,
+          wdId: doc.id,
+          ...doc.data(),
+        })) as WithdrawType[];
+
+        allWithdraws.push(...wdData);
+      }
+
+      setWithdraws(allWithdraws);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+    fetchWithdraws();
+  }, []);
+
+
+
+  const handleApproveWithdraw =
+    async (
+      uid: string,
+      wdId: string
+    ) => {
+      try {
+        // doc saldo user
+        const balanceRef = doc(
+          db,
+          "balances",
+          uid
+        );
+
+        // doc withdraw user
+        const wdRef = doc(
           db,
           "balances",
           uid,
-          "withdraw_history"
-        )
-      );
-
-      const wdData = wdSnap.docs.map((doc) => ({
-        uid,
-        wdId: doc.id,
-        ...doc.data(),
-      })) as WithdrawType[];
-
-      allWithdraws.push(...wdData);
-    }
-
-    setWithdraws(allWithdraws);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-useEffect(() => {
-  fetchUsers();
-  fetchWithdraws();
-}, []);
-
-
-
-const handleApproveWithdraw =
-  async (
-    uid: string,
-    wdId: string
-  ) => {
-    try {
-      // doc saldo user
-      const balanceRef = doc(
-        db,
-        "balances",
-        uid
-      );
-
-      // doc withdraw user
-      const wdRef = doc(
-        db,
-        "balances",
-        uid,
-       "withdraw_history",
-        wdId
-      );
-
-      // get withdraw
-      const wdSnap =
-        await getDoc(wdRef);
-
-      if (!wdSnap.exists()) {
-        return alert(
-          "Withdraw tidak ditemukan"
+          "withdraw_history",
+          wdId
         );
-      }
 
-      const wdData =
-        wdSnap.data();
+        // get withdraw
+        const wdSnap =
+          await getDoc(wdRef);
 
-      const amount =
-        wdData.amount || 0;
+        if (!wdSnap.exists()) {
+          return alert(
+            "Withdraw tidak ditemukan"
+          );
+        }
 
-      // get balance
-      const balanceSnap =
-        await getDoc(balanceRef);
+        const wdData =
+          wdSnap.data();
 
-      const currentSaldo =
-        balanceSnap.data()?.saldo || 0;
+        const amount =
+          wdData.amount || 0;
 
-      // validasi
-      if (
-        currentSaldo < amount
-      ) {
-        return alert(
-          "Saldo tidak cukup"
+        // get balance
+        const balanceSnap =
+          await getDoc(balanceRef);
+
+        const currentSaldo =
+          balanceSnap.data()?.saldo || 0;
+
+        // validasi
+        if (
+          currentSaldo < amount
+        ) {
+          return alert(
+            "Saldo tidak cukup"
+          );
+        }
+
+        // kurangi saldo
+        await updateDoc(
+          balanceRef,
+          {
+            saldo:
+              currentSaldo -
+              amount,
+          }
         );
+
+        // approve wd
+        await updateDoc(
+          wdRef,
+          {
+            status:
+              "approved",
+            approvedAt:
+              serverTimestamp(),
+          }
+        );
+
+        fetchWithdraws();
+      } catch (error) {
+        console.log(error);
       }
+    };
+  const handleRejectWithdraw =
+    async (
+      uid: string,
+      wdId: string
+    ) => {
+      try {
+        const wdRef = doc(
+          db,
+          "balances",
+          uid,
+          "withdraw_history",
+          wdId
+        );
 
-      // kurangi saldo
-      await updateDoc(
-        balanceRef,
-        {
-          saldo:
-            currentSaldo -
-            amount,
-        }
-      );
+        await updateDoc(
+          wdRef,
+          {
+            status:
+              "rejected",
+            rejectedAt:
+              serverTimestamp(),
+          }
+        );
 
-      // approve wd
-      await updateDoc(
-        wdRef,
-        {
-          status:
-            "approved",
-          approvedAt:
-            serverTimestamp(),
-        }
-      );
-
-      fetchWithdraws();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-const handleRejectWithdraw =
-  async (
-    uid: string,
-    wdId: string
-  ) => {
-    try {
-      const wdRef = doc(
-        db,
-        "balances",
-        uid,
-       "withdraw_history",
-        wdId
-      );
-
-      await updateDoc(
-        wdRef,
-        {
-          status:
-            "rejected",
-          rejectedAt:
-            serverTimestamp(),
-        }
-      );
-
-      fetchWithdraws();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        fetchWithdraws();
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        
+
         {/* HEADER */}
         <div className={styles.header}>
           <div>
@@ -372,105 +372,105 @@ const handleRejectWithdraw =
 
       {/* WITHDRAW SECTION */}
 
-<div className={styles.withdrawSection}>
-  
-  <div className={styles.sectionHeader}>
-    <h2>Withdraw Requests</h2>
-  </div>
+      <div className={styles.withdrawSection}>
 
-  <div className={styles.tableWrapper}>
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>UID</th>
-          <th>Name</th>
-          <th>Bank</th>
-          <th>Amount</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+        <div className={styles.sectionHeader}>
+          <h2>Withdraw Requests</h2>
+        </div>
 
-      <tbody>
-        {withdraws.map((item) => (
-          <tr key={item.wdId}>
-            
-            <td>{item.uid}</td>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>UID</th>
+                <th>Name</th>
+                <th>Bank</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-            <td>{item.name}</td>
+            <tbody>
+              {withdraws.map((item) => (
+                <tr key={item.wdId}>
 
-            <td>{item.bank}</td>
+                  <td>{item.uid}</td>
 
-            <td>
-              Rp{" "}
-              {item.amount.toLocaleString(
-                "id-ID"
-              )}
-            </td>
+                  <td>{item.name}</td>
 
-            <td>
-              {item.status ===
-              "approved" ? (
-                <span
-                  className={styles.active}
-                >
-                  Approved
-                </span>
-              ) : item.status ===
-                "rejected" ? (
-                <span
-                  className={styles.reject}
-                >
-                  Rejected
-                </span>
-              ) : (
-                <span
-                  className={styles.pending}
-                >
-                  Pending
-                </span>
-              )}
-            </td>
+                  <td>{item.bank}</td>
 
-            <td>
-              <div
-                className={styles.actionRow}
-              >
-                <button
-                  onClick={() =>
-                    handleApproveWithdraw(
-                      item.uid,
-                      item.wdId
-                    )
-                  }
-                  className={
-                    styles.approveBtn
-                  }
-                >
-                  Approve
-                </button>
+                  <td>
+                    Rp{" "}
+                    {item.amount.toLocaleString(
+                      "id-ID"
+                    )}
+                  </td>
 
-                <button
-                  onClick={() =>
-                    handleRejectWithdraw(
-                      item.uid,
-                      item.wdId
-                    )
-                  }
-                  className={
-                    styles.rejectBtn
-                  }
-                >
-                  Reject
-                </button>
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</div>
+                  <td>
+                    {item.status ===
+                      "approved" ? (
+                      <span
+                        className={styles.active}
+                      >
+                        Approved
+                      </span>
+                    ) : item.status ===
+                      "rejected" ? (
+                      <span
+                        className={styles.reject}
+                      >
+                        Rejected
+                      </span>
+                    ) : (
+                      <span
+                        className={styles.pending}
+                      >
+                        Pending
+                      </span>
+                    )}
+                  </td>
+
+                  <td>
+                    <div
+                      className={styles.actionRow}
+                    >
+                      <button
+                        onClick={() =>
+                          handleApproveWithdraw(
+                            item.uid,
+                            item.wdId
+                          )
+                        }
+                        className={
+                          styles.approveBtn
+                        }
+                      >
+                        Approve
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          handleRejectWithdraw(
+                            item.uid,
+                            item.wdId
+                          )
+                        }
+                        className={
+                          styles.rejectBtn
+                        }
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
