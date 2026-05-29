@@ -1,5 +1,5 @@
 export const API_URL = {
-  BASE_URL: "http://localhost:5000",
-  UPDATE: "http://localhost:5000/Update",
-  REGISTER_URL: "http://localhost:5000/register",
+  BASE_URL: "https://backend-production-74f5a.up.railway.app",
+  UPDATE: "https://backend-production-74f5a.up.railway.app/Update",
+  REGISTER_URL: "https://backend-production-74f5a.up.railway.app/register",
 };

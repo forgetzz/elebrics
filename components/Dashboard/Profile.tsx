@@ -72,7 +72,7 @@ export default function ProfilePage() {
 
         };
         try {
-            const res = await fetch("http://localhost:5000/update/update2", {
+            const res = await fetch("https://backend-production-74f5a.up.railway.app/update/update2", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                 body: JSON.stringify(cleanData),

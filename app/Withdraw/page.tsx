@@ -71,7 +71,7 @@ useEffect(() => {
             setMessage("");
 
             const response = await fetch(
-                "http://localhost:5000/withdraw/wd",
+                "https://backend-production-74f5a.up.railway.app/withdraw/wd",
                 {
                     method: "POST",
 
