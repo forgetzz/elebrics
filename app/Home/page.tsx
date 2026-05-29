@@ -14,20 +14,20 @@ import { useRouter } from "next/navigation";
 
 const nav_items: { key: TabKey; icon: React.ReactNode; label: string }[] = [
     { key: "home", icon: <Home size={19} />, label: "Beranda" },
-  {key: "withdraw" , icon: <BanknoteArrowDown size={19} />, label:"Withdraw"},
-    { key: "upload", icon: <UploadIcon className="bg0-" size={22} />, label: "Upload" },
+    { key: "withdraw", icon: <BanknoteArrowDown size={19} />, label: "Withdraw" },
+    { key: "upload", icon: <UploadIcon  size={22} />, label: "Upload" },
     { key: "profile", icon: <User size={19} />, label: "Profil" },
 ]
 export default function DashboardLayout() {
     const { activeTab, setActiveTab } = useTabStore();
     const router = useRouter()
-    const {Isdarks , themeToggle, ThemeHelper} = useTheme();
+    const { Isdarks, themeToggle, ThemeHelper } = useTheme();
     const [verifikasi, setVerifikasi] = useState<boolean | null>(null);
     const { user } = useAuth()
 
-   
 
-      useEffect(() => {
+
+    useEffect(() => {
         if (!user) return;
 
         const unsub = onSnapshot(
@@ -48,11 +48,6 @@ export default function DashboardLayout() {
 
         return () => unsub();
     }, [user]);
-
-
-
-
-
 
 
     return (
