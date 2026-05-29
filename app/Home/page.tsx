@@ -17,7 +17,7 @@ const nav_items: { key: TabKey; icon: React.ReactNode; label: string }[] = [
   {key: "withdraw" , icon: <BanknoteArrowDown size={19} />, label:"Withdraw"},
     { key: "upload", icon: <UploadIcon className="bg0-" size={22} />, label: "Upload" },
     { key: "profile", icon: <User size={19} />, label: "Profil" },
-
+]
 export default function DashboardLayout() {
     const { activeTab, setActiveTab } = useTabStore();
     const router = useRouter()
