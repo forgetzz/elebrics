@@ -182,20 +182,20 @@ export default function UploadMusic() {
 
     try {
       // 1. Upload audio ke Pinata
-      setUploadPhase("Mengupload audio ke Pinata...");
+      setUploadPhase("Mengupload audio");
       setAudioProgress(10);
       const audioResult = await uploadToPinata(audio);
 
       setAudioProgress(100);
 
       // 2. Upload cover ke Pinata
-      setUploadPhase("Mengupload cover artwork ke Pinata...");
+      setUploadPhase("Mengupload cover artwork...");
       setCoverProgress(10);
       const coverResult = await uploadToPinata(cover);
       setCoverProgress(100);
 
       // 3. Bangun metadata object
-      setUploadPhase("Menyimpan metadata ke Firestore...");
+      setUploadPhase("Menyimpan metadata...");
       setFirestoreProgress(30);
 
       const metadata: MusicMetadata = {
@@ -334,17 +334,17 @@ export default function UploadMusic() {
           </p>
 
           <ProgressBar
-            label="Audio → Pinata IPFS"
+            label="Audio "
             value={audioProgress}
           />
 
           <ProgressBar
-            label="Cover → Pinata IPFS"
+            label="Cover "
             value={coverProgress}
           />
 
           <ProgressBar
-            label="Metadata → Firestore"
+            label="Metadata"
             value={firestoreProgress}
           />
         </div>
@@ -368,9 +368,9 @@ export default function UploadMusic() {
               ThemeHelper.TextColor
             )}
           >Upload Musik</h1>
-          <p className={styles.pageSub}>
+          {/* <p className={styles.pageSub}>
             Lengkapi metadata · File diupload ke Pinata IPFS · Tersimpan otomatis ke Firestore
-          </p>
+          </p> */}
         </div>
 
         {/* Stepper */}
