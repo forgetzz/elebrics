@@ -529,13 +529,13 @@ export default function UploadMusic() {
                   <span style={s.hint}>Untuk rilis album/EP (opsional untuk single)</span>
                 </Field>
               </Row>
-              <div style={s.infoBox}>
+              {/* <div style={s.infoBox}>
                 <span style={{ fontSize: 18, marginRight: 10 }}>ℹ</span>
                 <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5 }}>
                   ISRC dan UPC bisa digenerate otomatis jika kosong. File audio & cover akan diupload ke
                   <strong> Pinata IPFS</strong>, lalu URL & CID-nya disimpan ke <strong>Firestore</strong>.
                 </p>
-              </div>
+              </div> */}
             </Section>
           )}
 

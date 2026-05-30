@@ -9,6 +9,14 @@ import RilisSection from "@/components/layout/RilisSection";
 
 
 export default function Home() {
+  const nama = {
+    name: "",
+    function: function NAMA(params: boolean) {
+      console.log(params)
+    },
+    
+  }
+
 
 
   return (
@@ -20,6 +28,11 @@ export default function Home() {
       <RilisSection />
       <AboutUs />
       <Footer />
+
+
+
+
+
     </main>
   );
 }
