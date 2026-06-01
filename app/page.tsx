@@ -1,23 +1,10 @@
 "use client"
-import { Button, Card, Herosection, Navbar } from "@/components/index"
-import AboutUs from "@/components/layout/AboutUs";
-import ArtistSection from "@/components/layout/ArtistSection";
-import Footer from "@/components/layout/Footer";
-import RilisSection from "@/components/layout/RilisSection";
-
+import { ArtistSection, Button, Card, Herosection, Navbar , AboutUs, Footer, RilisSection } from "@/components/index"
+import MusicPlatform from "@/components/layout/MusicPlatform";
 
 
 
 export default function Home() {
-  const nama = {
-    name: "",
-    function: function NAMA(params: boolean) {
-      console.log(params)
-    },
-    
-  }
-
-
 
   return (
     <main>
@@ -26,13 +13,9 @@ export default function Home() {
       <Card />
       <ArtistSection />
       <RilisSection />
+      <MusicPlatform/>
       <AboutUs />
       <Footer />
-
-
-
-
-
     </main>
   );
 }

@@ -1,127 +1,18 @@
 "use client";
 
 import { useAuth, useTheme } from "@/hooks";
+import {initialForm, STEPS, MUSICAL_KEYS, LANGUAGES, RELEASE_TYPES ,GENRES} from "@/constants"
 import { db } from "@/lib/firebase";
 import { addDoc, arrayUnion, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import React, { useState, useRef } from "react";
 import styles from "../css/Upload.module.css"
 import clsx from "clsx";
+import { FormState, MusicMetadata } from "@/types";
+import { saveToFirestore, uploadToPinata } from "@/utils";
 
-interface MusicMetadata {
 
-  title: string;
-  artist: string;
-  featuredArtist: string;
-  releaseType: string;
-  albumName?: string;
-  trackNumber: number;
-  genre: string;
-  subGenre: string;
-  language: string;
-  releaseDate: string;
-  // Credits
-  credits: {
-    composer: string;
-    lyricist: string;
-    arranger: string;
-    producer: string;
-    recordingEngineer: string;
-    mixingEngineer: string;
-    masteringEngineer: string;
-  };
-  // Rights
-  rights: {
-    label: string;
-    publisher: string;
-    copyright: string;
-    isrc: string;
-    upc: string;
-  };
-  // Content
-  content: {
-    isExplicit: boolean;
-    isInstrumental: boolean;
-    bpm: number | null;
-    key: string;
-    lyrics: string;
-    description: string;
-  };
-  // Files (dari Pinata)
-  files: {
-    audioCid: string;
-    audioUrl: string;
-    audioFileName: string;
-    coverCid: string;
-    coverUrl: string;
-    coverFileName: string;
-  };
-  // System
-  status: "processing" | "live" | "rejected";
-  uploadedAt: string; // ISO string; ganti dengan serverTimestamp() Firestore
-}
-
-type FormState = {
-  title: string; artist: string; featuredArtist: string; releaseType: string;
-  albumName?: string; trackNumber: string; genre: string; subGenre: string;
-  language: string; releaseDate: string; composer: string; lyricist: string;
-  arranger: string; producer: string; recordingEngineer: string;
-  mixingEngineer: string; masteringEngineer: string; label: string;
-  publisher: string; copyright: string; isrc: string; upc: string;
-  isExplicit: boolean; isInstrumental: boolean; bpm: string; key: string;
-  lyrics: string; description: string;
-};
-
-const GENRES = [
-  "Pop", "Rock", "Hip Hop", "R&B / Soul", "Jazz", "EDM / Electronic",
-  "Classical", "Country", "Reggae", "Blues", "Metal", "Folk / Acoustic",
-  "Indie", "Latin", "Gospel / Rohani", "Dangdut", "Keroncong", "Lainnya",
-];
-const LANGUAGES = ["Indonesia", "English", "Jawa", "Sunda", "Mandarin", "Lainnya"];
-const RELEASE_TYPES = ["Single"];
-const STEPS = ["Info Dasar", "Credits", "Hak & Distribusi", "Konten & File"];
-const MUSICAL_KEYS = [
-  "C Major", "C Minor", "C# Major", "C# Minor", "D Major", "D Minor",
-  "Eb Major", "Eb Minor", "E Major", "E Minor", "F Major", "F Minor",
-  "F# Major", "F# Minor", "G Major", "G Minor", "Ab Major", "Ab Minor",
-  "A Major", "A Minor", "Bb Major", "Bb Minor", "B Major", "B Minor",
-];
-
-const initialForm: FormState = {
-  title: "", artist: "", featuredArtist: "", releaseType: "Single", albumName: "",
-  trackNumber: "1", genre: "", subGenre: "", language: "Indonesia", releaseDate: "",
-  composer: "", lyricist: "", arranger: "", producer: "", recordingEngineer: "",
-  mixingEngineer: "", masteringEngineer: "", label: "", publisher: "", copyright: "",
-  isrc: "", upc: "", isExplicit: false, isInstrumental: false, bpm: "", key: "",
-  lyrics: "", description: "",
-};
 
 // ─── PINATA UPLOAD ─────────────────────────────────────────────────────────
-async function uploadToPinata(
-  file: File
-): Promise<{ url: string }> {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  const res = await fetch("/api/upload", {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || "Upload gagal");
-  }
-
-  return await res.json();
-}
-
-async function saveToFirestore(metadata: MusicMetadata): Promise<string> {
-
-
-  await new Promise((r) => setTimeout(r, 600));
-  console.log("FIRESTORE PAYLOAD:", metadata);
-  return `doc_${Date.now()}`;
-}
 
 
 export default function UploadMusic() {

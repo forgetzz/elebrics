@@ -1,35 +1,34 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { db } from "@/lib/firebase";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowRight, Code2, AlertCircle, CheckCircle2, User, Mail, Phone, Lock, Building2, CreditCard, Wallet, AtSign, Users, Music } from "lucide-react";
 import { Register } from "@/service/register";
 import { registerType } from "@/types";
 import { useAuth } from "@/hooks/useAuth";
 import Bubble from "@/components/ui/Bubble";
+import { BANKS } from "@/constants";
 
-const BANKS = ["BCA", "BRI", "BNI", "Mandiri", "CIMB", "Danamon"];
 
-const fields: {
+
+ const fields:  {
   key: keyof registerType;
   label: string;
   placeholder: string;
   type?: string;
   icon: React.ReactNode;
   hint?: string;
-}[] = [
+} []= [
     { key: "name", label: "Nama Lengkap", placeholder: "Nama lengkap kamu", type: "text", icon: <User size={14} /> },
     { key: "email", label: "Email", placeholder: "Email aktif kamu", type: "email", icon: <Mail size={14} /> },
-    { key: "username", label: "Username", placeholder: "Contoh: ASB_001", type: "text", icon: <AtSign size={14} /> },
+    { key: "username", label: "Username", placeholder: "Contoh: geral002", type: "text", icon: <AtSign size={14} /> },
     { key: "whatsapp", label: "WhatsApp", placeholder: "08xxxxxxxxxx", type: "tel", icon: <Phone size={14} /> },
     { key: "rekening", label: "Nomor Rekening", placeholder: "Contoh: 1234567890", type: "text", icon: <CreditCard size={14} /> },
     { key: "namaRekening", label: "nama Rekening", placeholder: "nama rekening...", type: "text", icon: <Users size={14} />, hint: "nama rekening anda" },
   ];
 
 export default function MitraRegisterPage() {
-  const { user } = useAuth();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);

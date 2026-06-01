@@ -1,42 +1,13 @@
 import { useAuth, useTheme } from '@/hooks'
 import { db } from '@/lib/firebase';
-import { Datas } from '@/types';
+import { ActivityType, Datas, PlatformType, StatType, TrackType, WithdrawActivityType } from '@/types';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import styles from '../css/Home.module.css'
 import { collection, getDocs } from "firebase/firestore";
-type ActivityType = {
-  text: string;
-  time: string;
-  icon: string;
-};
 
-type TrackType = {
-  rank: number;
-  title: string;
-  artist: string;
 
-  coverUrl: string
-};
-
-type StatType = {
-  label: string;
-  value: string;
-  change: string;
-};
-
-type PlatformType = {
-  name: string;
-  pct: number;
-};
-
-type WithdrawActivityType = {
-  text: string;
-  time: string;
-  icon: string;
-  status: string;
-};
 export default function Home() {
   const { user } = useAuth()
   const router = useRouter()
@@ -46,6 +17,7 @@ export default function Home() {
   const [topTracks, setTopTracks] = useState<TrackType[]>([]);
   const [stats, setStats] = useState<StatType[]>([]);
   const [platforms, setPlatforms] = useState<PlatformType[]>([]);
+  const [trendingSong, setTrendingSong] = useState<string[]>([])
   const [
     withdrawActivities,
     setWithdrawActivities,
@@ -54,189 +26,197 @@ export default function Home() {
   );
 
   useEffect(() => {
-    const fetchWithdraws = async () => {
-      if (!user) return;
+    if (!user) return;
 
+    const fetchDashboard = async () => {
       try {
-        const wdRef = collection(
+        const userRef = doc(db, "users", user.uid);
+        const balanceRef = doc(db, "balances", user.uid);
+        const musicRef = collection(
+          db,
+          "users",
+          user.uid,
+          "music"
+        );
+
+        const withdrawRef = collection(
           db,
           "balances",
           user.uid,
           "withdraw_history"
         );
 
-        const snapshot = await getDocs(
-          wdRef
+        const [
+          userSnap,
+          balanceSnap,
+          musicSnap,
+          withdrawSnap,
+        ] = await Promise.all([
+          getDoc(userRef),
+          getDoc(balanceRef),
+          getDocs(musicRef),
+          getDocs(withdrawRef),
+        ]);
+
+        const userData = userSnap.data();
+        console.log(userSnap.data())
+        if (!userData) return
+        const balanceData = balanceSnap.data();
+
+        // ======================
+        // STATS
+        // ======================
+
+        setStats([
+          {
+            label: "Total Katalog",
+            value: `${musicSnap.size || 0}`,
+            change: "+18%",
+          },
+          {
+            label: "Pendapatan",
+            value: `Rp ${(balanceData?.saldo || 0)
+              .toLocaleString("id-ID")}`,
+            change: "+9%",
+          },
+          {
+            label: "Rilis Aktif",
+            value: `${musicSnap.size || 0}`,
+            change: "3 baru",
+          },
+          {
+            label: "reject",
+            value: `${userData.reject || 0}`,
+            change: "aktif",
+          },
+        ]);
+
+        // ======================
+        // TRENDING SONG
+        // ======================
+
+        setTrendingSong(
+          userData?.trendingSong || []
         );
 
-        const data = snapshot.docs
-          .map((doc) => {
-            const wd = doc.data();
+        // ======================
+        // PLATFORM
+        // ======================
+
+        setPlatforms([
+          {
+            name: "Spotify,iTunes,YouTube,Tiktok,Tidal, DLL.",
+            pct: Number(
+              userData?.totalPlatfrom || 0
+            ),
+          },
+        ]);
+
+        // ======================
+        // TRACKS
+        // ======================
+
+        const tracks = musicSnap.docs.map(
+          (doc, index) => {
+            const music = doc.data();
 
             return {
-              text: `Withdraw Rp ${Number(
-                wd.amount
-              ).toLocaleString("id-ID")} berhasil`,
-
-              time: wd.createdAt
-                ?.toDate()
-                ?.toLocaleDateString("id-ID"),
-
-              icon: "💸",
-
-              status: wd.status,
+              rank: index + 1,
+              title: music.title,
+              artist: music.artist,
+              coverUrl:
+                music.files?.coverUrl,
             };
-          })
+          }
+        );
 
-          // FILTER APPROVED
-          .filter(
-            (item) =>
-              item.status === "approved"
-          );
+        setTopTracks(tracks);
 
-        setWithdrawActivities(data);
-      } catch (error) {
-        console.log(error);
+        // ======================
+        // TODAY ACTIVITIES
+        // ======================
+
+        const today = new Date();
+
+        const activitiesData =
+          musicSnap.docs
+            .map((doc) => {
+              const music = doc.data();
+
+              return {
+                text: `${music.title} - ${music.artist}`,
+                time: new Date(
+                  music.uploadedAt
+                ),
+                icon: "🎵",
+              };
+            })
+            .filter((item) => {
+              const date = item.time;
+
+              return (
+                date.getDate() ===
+                today.getDate() &&
+                date.getMonth() ===
+                today.getMonth() &&
+                date.getFullYear() ===
+                today.getFullYear()
+              );
+            })
+            .map((item) => ({
+              ...item,
+              time:
+                item.time.toLocaleDateString(
+                  "id-ID"
+                ),
+            }));
+
+        setActivities(
+          activitiesData as ActivityType[]
+        );
+
+        // ======================
+        // WITHDRAW
+        // ======================
+
+        const withdrawData =
+          withdrawSnap.docs
+            .map((doc) => {
+              const wd = doc.data();
+
+              return {
+                text: `Withdraw Rp ${Number(
+                  wd.amount
+                ).toLocaleString(
+                  "id-ID"
+                )} berhasil`,
+                time:
+                  wd.createdAt
+                    ?.toDate()
+                    ?.toLocaleDateString(
+                      "id-ID"
+                    ),
+                icon: "💸",
+                status: wd.status,
+              };
+            })
+            .filter(
+              (item) =>
+                item.status ===
+                "approved"
+            );
+
+        setWithdrawActivities(
+          withdrawData
+        );
+      } catch (err) {
+        console.log(err);
       }
     };
 
-    fetchWithdraws();
+    fetchDashboard();
   }, [user]);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      if (!user) return;
-
-      // MUSIC
-      const musicRef = collection(db, "users", user.uid, "music");
-      const musicSnap = await getDocs(musicRef);
-
-      // BALANCE
-      const balanceRef = doc(
-        db,
-        "balances",
-        user.uid
-      );
-
-      const balanceSnap =
-        await getDoc(balanceRef);
-
-      // USER DOC
-      const userRef = doc(
-        db,
-        "users",
-        user.uid
-      );
-
-      const userSnap =
-        await getDoc(userRef);
-
-      const userData =
-        userSnap.data();
-
-      // TOTAL BALANCE
-      const totalBalance =
-        balanceSnap.data()?.saldo || 0;
-
-
-      const dashboardStats = [
-        {
-          label: "Total Streams",
-          value: userData?.totalStreams.toLocaleString("id-ID"),
-          change: "+18%",
-        },
-
-        {
-          label: "Pendapatan",
-          value: `Rp ${totalBalance.toLocaleString("id-ID")}`,
-          change: "+9%",
-        },
-
-        {
-          label: "Rilis Aktif",
-          value: `${musicSnap.size}`,
-          change: "3 baru",
-        },
-
-        {
-          label: "Platform",
-          value: `${userData?.platforms || 0}`,
-          change: "aktif",
-        },
-      ];
-
-      setStats(dashboardStats);
-    };
-
-    fetchStats();
-  }, [user]);
-
-  useEffect(() => {
-    const fetchTracks = async () => {
-      if (!user) return;
-
-      const postsRef = collection(db, "users", user.uid, "music");
-
-      const snapshot = await getDocs(postsRef);
-
-      const data = snapshot.docs.map((doc, index) => {
-        const music = doc.data();
-
-        return {
-  rank: index + 1,
-          title: music.title,
-          artist: music.artist,
-        coverUrl: doc.data().files.coverUrl,
-        };
-      });
-
-      setTopTracks(data);
-    };
-
-    fetchTracks();
-  }, [user]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      if (!user) return;
-
-      const postsRef = collection(db, "users", user.uid, "music");
-
-      const snapshot = await getDocs(postsRef);
-
-      const today = new Date();
-
-      const data = snapshot.docs
-        .map((doc) => {
-          const music = doc.data();
-
-          return {
-            text: `${music.title} - ${music.artist}`,
-            time: new Date(music.uploadedAt),
-            icon: "🎵",
-          };
-        })
-
-        .filter((item) => {
-          const date = item.time;
-
-          return (
-            date.getDate() === today.getDate() &&
-            date.getMonth() === today.getMonth() &&
-            date.getFullYear() === today.getFullYear()
-          );
-        })
-
-        .map((item) => ({
-          ...item,
-          time: item.time.toLocaleDateString("id-ID"),
-        }));
-
-      setActivities(data);
-    };
-
-    fetchPosts();
-  }, [user]);
 
   useEffect(() => {
     if (!user) return;
@@ -251,38 +231,11 @@ export default function Home() {
     return () => unsub();
   }, [user]);
 
+
   useEffect(() => {
     if (verifikasi === false) router.replace("../Verifikasi");
   }, [verifikasi]);
 
-
-  useEffect(() => {
-    const fetchPlatforms = async () => {
-      if (!user) return;
-
-      const userRef = doc(db, "users", user.uid);
-
-      const snapshot = await getDoc(userRef);
-
-      const data = snapshot.data();
-
-      const platformData = [
-        {
-          name: "spotify",
-          pct: Number(data?.spotify || 0),
-        },
-
-        {
-          name: "youTube",
-          pct: Number(data?.youtube || 0),
-        },
-      ];
-
-      setPlatforms(platformData);
-    };
-
-    fetchPlatforms();
-  }, [user]);
 
 
 
@@ -410,6 +363,20 @@ export default function Home() {
                 </div>
               </div>
             ))}
+
+            <h1 className="text-xl font-bold mb-4">Trending Songs</h1>
+
+            <div className="space-y-3">
+              {Array.isArray(trendingSong) &&
+                trendingSong.map((item, key) => (
+                  <div
+                    key={key}
+                    className="p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition"
+                  >
+                    <p className="font-medium">{item}</p>
+                  </div>
+                ))}
+            </div>
           </div>
 
         </div>
@@ -419,20 +386,31 @@ export default function Home() {
           <div className={styles.cardHeader}>
             <h2 className={styles.cardTitle}> Rilis Terbaru</h2>
           </div>
-          {activities.map((activity, idx) => (
-            <div key={idx} className={styles.activityRow}>
-              <div className={styles.activityIcon}>{activity.icon}</div>
-              <div className={styles.activityContent}>
-                <div className={styles.activityText}>
-                  {activity.text}
-                </div>
+          {
+            activities && activities.length > 0 ? (
+              <>
+                {activities.map((activity, idx) => (
+                  <div key={idx} className={styles.activityRow}>
+                    <div className={styles.activityIcon}>
+                      {activity.icon}
+                    </div>
 
-                <div className={styles.activityTime}>
-                  {activity.time}
-                </div>
-              </div>
-            </div>
-          ))}
+                    <div className={styles.activityContent}>
+                      <div className={styles.activityText}>
+                        {activity.text}
+                      </div>
+
+                      <div className={styles.activityTime}>
+                        {activity.time}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <h1 className='text-center mb-20'>TIDAK ADA RILIS TERBARU </h1>
+            )
+          }
         </div>
         {/* WITHDRAW ACTIVITIES */}
 

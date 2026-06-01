@@ -10,7 +10,6 @@ import Turnstile from "react-turnstile";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowRight, Code2, AlertCircle } from "lucide-react";
 import { useAuth } from "@/hooks";
-import { Datas } from "@/types";
 import Bubble from "@/components/ui/Bubble";
 
 

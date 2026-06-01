@@ -6,7 +6,7 @@ import { ThemeContextTypes, ThemeProvider } from "../types/index"
 export const ThemesContext = createContext<ThemeContextTypes | undefined>(undefined)
 
 export function ThemeProviderContext({ children }: ThemeProvider) {
-    const [IsDark, setIsDark] = useState(false)
+    const [IsDark, setIsDark] = useState(true)
 
     const themeToggle = () => setIsDark(prev => !prev)
 

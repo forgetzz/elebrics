@@ -17,10 +17,11 @@ const navLinks = {
   Dukungan: [
     { label: 'Pusat Bantuan', href: '/' },
     { label: 'Hubungi Kami', href: 'https://www.instagram.com/elbricmediagroup?igsh=and3c3ZkdjhlM3p2' },
-    { label: 'Kebijakan Privasi', href: '/' },
+    { label: 'Irfan Afandy - Tim pengembang', href: 'https://forgetzstudio.com' },
     { label: 'Syarat & Ketentuan', href: '/' },
   ],
 }
+
 
 const socials = [
   { label: 'IG', href: 'https://www.instagram.com/elbricmediagroup?igsh=and3c3ZkdjhlM3p2' },
@@ -108,6 +109,20 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+          {Object.entries(navLinks).map(([group, links]) => (
+            <div key={group} className={styles.navCol}>
+              <h4 className={styles.navGroup}>{group}</h4>
+              <ul className={styles.navList}>
+                {links.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className={styles.navLink}>
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
         </div>
 
@@ -120,7 +135,7 @@ export default function Footer() {
             © {new Date().getFullYear()} ELBRIC MUSIC. Hak cipta dilindungi.
           </p>
           <p className={styles.madeWith}>
-            Dibuat dengan <span className={styles.heart}>♥</span> di Indonesia
+            Support Tim  forgetzstudio
           </p>
         </div>
 

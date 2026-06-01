@@ -4,8 +4,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { Camera, Save, X, Pencil, LogOut, User, Link, Phone, Building2, CreditCard, Wallet } from "lucide-react";
-import { signOut } from "firebase/auth";
+import { sendPasswordResetEmail, signOut } from "firebase/auth";
 import { useTheme } from "@/hooks";
+import { Button } from "../ui/Button";
+import ButtonTwo from "../ui/ButtonTwo";
 
 
 
@@ -32,7 +34,7 @@ export default function ProfilePage() {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState<UserData>(userData);
-    const {ThemeHelper} = useTheme()
+    const { ThemeHelper } = useTheme()
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -85,6 +87,27 @@ export default function ProfilePage() {
         setIsEditing(false);
     };
 
+
+
+    const resetPassword = async (email: string) => {
+        try {
+            await sendPasswordResetEmail(auth, email);
+            alert("Cek Email anda Sekarang, Link reset Pasword ada di Spam");
+        } catch (error: any) {
+            switch (error.code) {
+                case "auth/user-not-found":
+                    alert("Email tidak terdaftar");
+                    break;
+
+                case "auth/invalid-email":
+                    alert("Format email tidak valid");
+                    break;
+
+                default:
+                    alert("Terjadi kesalahan");
+            }
+        }
+    };
     return (
         <div
             className="min-h-screen pb-24 px-5 pt-7 relative overflow-hidden"
@@ -148,7 +171,7 @@ export default function ProfilePage() {
                     <p className="mb-4 flex items-center gap-2"
                         style={{
                             fontFamily: "'DM Mono', monospace", fontSize: 9, letterSpacing: "0.18em",
-                           color: `${ThemeHelper.TextColor}`, textTransform: "uppercase"
+                            color: `${ThemeHelper.TextColor}`, textTransform: "uppercase"
                         }}>
                         informasi akun
                         <span className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
@@ -161,7 +184,7 @@ export default function ProfilePage() {
                         const Icon = field.icon;
                         const isLast = i === FIELDS.length - 1;
                         const isEVM = field.key === "addressEVM";
-         
+
                         return (
                             <div key={field.key}
                                 className={`flex items-center py-2.5 ${!isLast ? "border-b" : ""}`}
@@ -229,6 +252,12 @@ export default function ProfilePage() {
                     </button>
                 </div>
             )}
+
+            <div className=" flex justify-center ">
+
+                <ButtonTwo textBtn="Reset Password" textColor="text-red-500" func={() => resetPassword(userData.email)} />
+            </div>
+
         </div>
     );
 }

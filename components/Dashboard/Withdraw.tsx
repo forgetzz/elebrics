@@ -31,34 +31,34 @@ export default function Withdraw() {
     const [message, setMessage] =
         useState("");
 
-useEffect(() => {
-    const fetchBalance = async () => {
-        if (!user) return;
+    useEffect(() => {
+        const fetchBalance = async () => {
+            if (!user) return;
 
-        try {
-            const balanceRef = doc(
-                db,
-                "balances",
-                user.uid
-            );
-
-            const snapshot =
-                await getDoc(balanceRef);
-
-            if (snapshot.exists()) {
-                const data = snapshot.data();
-
-                setBalance(
-                    data.saldo || 0
+            try {
+                const balanceRef = doc(
+                    db,
+                    "balances",
+                    user.uid
                 );
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
-    fetchBalance();
-}, [user]);
+                const snapshot =
+                    await getDoc(balanceRef);
+
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+
+                    setBalance(
+                        data.saldo || 0
+                    );
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchBalance();
+    }, [user]);
     // HANDLE WD
     const handleWithdraw = async (
         e: FormEvent
@@ -121,6 +121,19 @@ useEffect(() => {
         }
     };
 
+
+    const handleAmountChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const raw = e.target.value.replace(/\D/g, "");
+
+        const formatted = new Intl.NumberFormat("id-ID").format(
+            Number(raw)
+        );
+
+        setAmount(raw); // simpan angka asli
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.card}>
@@ -159,11 +172,15 @@ useEffect(() => {
                         <label>Amount</label>
 
                         <input
-                            type="number"
+                            type="text"
                             placeholder="Enter amount"
-                            value={amount}
+                            value={
+                                amount
+                                    ? new Intl.NumberFormat("id-ID").format(Number(amount))
+                                    : ""
+                            }
                             onChange={(e) =>
-                                setAmount(e.target.value)
+                                setAmount(e.target.value.replace(/\D/g, ""))
                             }
                         />
                     </div>

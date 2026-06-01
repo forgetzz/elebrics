@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0f172a;
+
   padding: 20px;
 }
 
@@ -68,7 +68,7 @@
   padding: 14px;
   border: 1px solid #475569;
   border-radius: 10px;
-  background: #0f172a;
+
   color: white;
   font-size: 15px;
   outline: none;
