@@ -1,52 +1,46 @@
 import { MusicMetadata } from "@/types";
 
-
 async function uploadToPinata(
   file: File
 ) {
-  const formData =
-    new FormData();
+  // ambil signed url
+  const signed =
+    await fetch(
+      "/api/pinata-url"
+    );
 
-  formData.append(
-    "file",
-    file
-  );
+  const { url } =
+    await signed.json();
 
-  const res = await fetch(
-    "/api/upload",
-    {
+  // upload langsung ke pinata
+  const upload =
+    await fetch(url, {
       method: "POST",
-      body: formData,
-    }
-  );
+      body: (() => {
+        const fd =
+          new FormData();
 
-  const text =
-    await res.text();
+        fd.append(
+          "file",
+          file
+        );
 
-  let data;
+        return fd;
+      })(),
+    });
 
-  try {
-    data =
-      JSON.parse(text);
-  } catch {
-    console.error(
-      "Bukan JSON:",
-      text
-    );
+  const result =
+    await upload.json();
 
-    throw new Error(text);
-  }
+  const cid =
+    result.cid;
 
-  if (!res.ok) {
-    throw new Error(
-      data.error ??
-        "Upload gagal"
-    );
-  }
-
-  return data;
+  return {
+    cid,
+    url:
+      `https://gateway.pinata.cloud/ipfs/${cid}`,
+  };
 }
-
 async function saveToFirestore(metadata: MusicMetadata): Promise<string> {
 
 
