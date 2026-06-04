@@ -1,24 +1,50 @@
 import { MusicMetadata } from "@/types";
 
 
-
 async function uploadToPinata(
   file: File
-): Promise<{ url: string }> {
-  const formData = new FormData();
-  formData.append("file", file);
+) {
+  const formData =
+    new FormData();
 
-  const res = await fetch("/api/upload", {
-    method: "POST",
-    body: formData,
-  });
+  formData.append(
+    "file",
+    file
+  );
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || "Upload gagal");
+  const res = await fetch(
+    "/api/upload",
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  const text =
+    await res.text();
+
+  let data;
+
+  try {
+    data =
+      JSON.parse(text);
+  } catch {
+    console.error(
+      "Bukan JSON:",
+      text
+    );
+
+    throw new Error(text);
   }
 
-  return await res.json();
+  if (!res.ok) {
+    throw new Error(
+      data.error ??
+        "Upload gagal"
+    );
+  }
+
+  return data;
 }
 
 async function saveToFirestore(metadata: MusicMetadata): Promise<string> {
